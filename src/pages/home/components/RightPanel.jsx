@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Sun, Calendar } from 'lucide-react';
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
@@ -35,6 +35,9 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
   // Set up Framer Motion spring progress value unconditionally
   const progressSpring = useSpring(0, { stiffness: 60, damping: 15 });
 
+  // Ref to track if we should jump the spring instantly without transition animation
+  const shouldJumpRef = useRef(true);
+
   // Helper to parse time strings in "YYYY-MM-DDTHH:MM" format to minutes from midnight
   const getMinutesFromIso = (isoStr) => {
     if (!isoStr) return 0;
@@ -58,6 +61,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
   if (weather?.current?.time !== lastWeatherTime) {
     setLastWeatherTime(weather?.current?.time);
     setCurrentMinutes(weather?.current?.time ? getMinutesFromIso(weather.current.time) : 0);
+    shouldJumpRef.current = true;
   }
 
   // Ticking local clock matching selected location timezone
@@ -96,9 +100,23 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
   // Sync the spring to target progress
   useEffect(() => {
     if (isLoaded) {
-      progressSpring.set(targetProgress);
+      if (shouldJumpRef.current) {
+        if (typeof progressSpring.jump === 'function') {
+          progressSpring.jump(targetProgress);
+        } else {
+          progressSpring.set(targetProgress);
+        }
+        shouldJumpRef.current = false;
+      } else {
+        progressSpring.set(targetProgress);
+      }
     } else {
-      progressSpring.set(0);
+      if (typeof progressSpring.jump === 'function') {
+        progressSpring.jump(0);
+      } else {
+        progressSpring.set(0);
+      }
+      shouldJumpRef.current = true;
     }
   }, [isLoaded, targetProgress, progressSpring]);
 
