@@ -164,15 +164,7 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    // Only request user's location if URL parameters are not set
-    const lat = searchParams.get('lat');
-    const lon = searchParams.get('lon');
-    const name = searchParams.get('name');
-    if (!lat || !lon || !name) {
-      handleUseCurrentLocation();
-    }
-  }, []);
+
 
   const handleSelectLocation = (selected) => {
     setLocation({
