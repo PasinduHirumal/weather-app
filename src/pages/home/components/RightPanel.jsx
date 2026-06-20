@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Sun, Calendar } from 'lucide-react';
 import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
@@ -35,19 +35,61 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
   // Set up Framer Motion spring progress value unconditionally
   const progressSpring = useSpring(0, { stiffness: 60, damping: 15 });
 
-  // Calculate target progress
-  const sunriseTime = weather?.daily?.sunrise?.[0] ? new Date(weather.daily.sunrise[0]).getTime() : 0;
-  const sunsetTime = weather?.daily?.sunset?.[0] ? new Date(weather.daily.sunset[0]).getTime() : 0;
-  const currentTime = weather?.current?.time ? new Date(weather.current.time).getTime() : 0;
+  // Helper to parse time strings in "YYYY-MM-DDTHH:MM" format to minutes from midnight
+  const getMinutesFromIso = (isoStr) => {
+    if (!isoStr) return 0;
+    try {
+      const timePart = isoStr.split('T')[1];
+      if (!timePart) return 0;
+      const [h, m] = timePart.split(':').map(Number);
+      return h * 60 + m;
+    } catch (e) {
+      return 0;
+    }
+  };
+
+  // State for current minutes in the target location
+  const [lastWeatherTime, setLastWeatherTime] = useState(weather?.current?.time);
+  const [currentMinutes, setCurrentMinutes] = useState(() => 
+    weather?.current?.time ? getMinutesFromIso(weather.current.time) : 0
+  );
+
+  // Sync state if props change (React render-phase adjustments)
+  if (weather?.current?.time !== lastWeatherTime) {
+    setLastWeatherTime(weather?.current?.time);
+    setCurrentMinutes(weather?.current?.time ? getMinutesFromIso(weather.current.time) : 0);
+  }
+
+  // Ticking local clock matching selected location timezone
+  useEffect(() => {
+    if (!isLoaded || typeof weather?.utc_offset_seconds === 'undefined') return;
+
+    const updateClock = () => {
+      const utcDate = new Date();
+      const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
+      const targetTime = new Date(utcTime + (weather.utc_offset_seconds * 1000));
+      
+      const minutes = targetTime.getHours() * 60 + targetTime.getMinutes();
+      setCurrentMinutes(minutes);
+    };
+
+    updateClock();
+    const interval = setInterval(updateClock, 10000); // Update every 10 seconds
+    return () => clearInterval(interval);
+  }, [isLoaded, weather?.utc_offset_seconds]);
+
+  // Calculate target progress using minutes from midnight
+  const sunriseMinutes = getMinutesFromIso(weather?.daily?.sunrise?.[0]);
+  const sunsetMinutes = getMinutesFromIso(weather?.daily?.sunset?.[0]);
 
   let targetProgress = 0.4; // Fallback
-  if (sunriseTime && sunsetTime && currentTime) {
-    if (currentTime <= sunriseTime) {
+  if (isLoaded && sunriseMinutes && sunsetMinutes && currentMinutes) {
+    if (currentMinutes <= sunriseMinutes) {
       targetProgress = 0;
-    } else if (currentTime >= sunsetTime) {
+    } else if (currentMinutes >= sunsetMinutes) {
       targetProgress = 1;
     } else {
-      targetProgress = (currentTime - sunriseTime) / (sunsetTime - sunriseTime);
+      targetProgress = (currentMinutes - sunriseMinutes) / (sunsetMinutes - sunriseMinutes);
     }
   }
 
