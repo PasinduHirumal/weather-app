@@ -1,6 +1,6 @@
 import React from 'react';
-import weatherBg from '../assets/weather_bg.png';
-import { getWeatherInfo } from '../utils/weatherUtils';
+import weatherBg from '../../../assets/weather_bg.png';
+import { getWeatherInfo } from '../../../utils/weatherUtils';
 
 export default function WeatherCard({ weather, loading }) {
   if (loading || !weather) {

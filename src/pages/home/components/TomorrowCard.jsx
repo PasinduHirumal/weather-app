@@ -1,6 +1,6 @@
 import React from 'react';
-import tomorrowBg from '../assets/tomorrow_rainy_bg.png';
-import { getWeatherInfo } from '../utils/weatherUtils';
+import tomorrowBg from '../../../assets/tomorrow_rainy_bg.png';
+import { getWeatherInfo } from '../../../utils/weatherUtils';
 
 export default function TomorrowCard({ weather, location, loading }) {
   if (loading || !weather) {

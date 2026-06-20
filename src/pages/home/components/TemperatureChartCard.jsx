@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Thermometer, CloudRain, Wind, Sun, Cloud, CloudSun } from 'lucide-react';
-import { getWeatherInfo } from '../utils/weatherUtils';
+import { getWeatherInfo } from '../../../utils/weatherUtils';
 
 export default function TemperatureChartCard({ weather, loading }) {
   const [activeTab, setActiveTab] = useState('temp');

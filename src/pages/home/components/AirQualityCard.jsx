@@ -1,7 +1,7 @@
 import React from 'react';
-import airQualityBg from '../assets/air_quality_bg.png';
+import airQualityBg from '../../../assets/air_quality_bg.png';
 import { Wind } from 'lucide-react';
-import { getAqiCategory, getWindDirection } from '../utils/weatherUtils';
+import { getAqiCategory, getWindDirection } from '../../../utils/weatherUtils';
 
 export default function AirQualityCard({ airQuality, weather, loading }) {
   if (loading || !airQuality || !weather) {
@@ -74,7 +74,7 @@ export default function AirQualityCard({ airQuality, weather, loading }) {
           {/* Active indicator bubble */}
           <div 
             className="absolute top-1/2 -translate-y-1/2 -mt-5 transition-all duration-500"
-            style={{ left: `${percentage}%`, transform: 'translate(-50%, -50%)' }}
+            style={{ left: `${percentage}%`, transform: 'translate(-50%, -55%)' }}
           >
             <div className="bg-[#1E293B] text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg relative shadow-md whitespace-nowrap">
               {standardLevel}

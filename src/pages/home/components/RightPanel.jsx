@@ -1,6 +1,6 @@
 import React from 'react';
 import { Sun, Calendar, Navigation } from 'lucide-react';
-import { getWeatherInfo, getUviCategory, formatTime, formatDate } from '../utils/weatherUtils';
+import { getWeatherInfo, getUviCategory, formatTime, formatDate } from '../../../utils/weatherUtils';
 
 export default function RightPanel({ weather, airQuality, location, loading }) {
   if (loading || !weather) {
