@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Navigation, Menu, Clock } from 'lucide-react';
+import Logo from '../assets/logo.jpg';
 
 export default function Header({ onSelectLocation, location, weather, onUseCurrentLocation, onToggleSidebar, sidebarOpen }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -76,7 +77,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100/80">
       {/* Profile Greeting Section */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
           className="p-2.5 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 flex lg:hidden"
@@ -84,6 +85,15 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
         >
           <Menu size={18} className="stroke-[2.2] text-orange-500" />
         </button>
+
+        {/* Mobile Logo */}
+        <div className="flex items-center gap-2 lg:hidden shrink-0">
+          <img
+            src={Logo}
+            alt="MinuteCast Logo"
+            className="w-9 h-9 object-contain rounded-full shadow-md shadow-orange-500/10"
+          />
+        </div>
 
         <div>
           <h2 className="text-slate-800 text-lg sm:text-xl font-extrabold leading-tight tracking-tight">
@@ -93,7 +103,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
             <span className="text-slate-500 text-xs font-semibold mt-1 flex items-center gap-1.5 leading-none">
               <Clock size={12} className="text-orange-500 stroke-[2.2] shrink-0" />
               <span>
-                {localTime} <span className="text-slate-400 font-medium">({weather.timezone_abbreviation || ''} • {weather.timezone})</span>
+                {localTime} <span className="text-slate-400 font-medium">({weather.timezone})</span>
               </span>
             </span>
           )}
