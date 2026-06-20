@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { Home, MapPin, Calendar, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { showMonitor } from '../lib/webStatus';
+import Logo from '../assets/logo.jpg';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const location = useLocation();
@@ -28,13 +29,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         ${isOpen ? 'translate-x-0 w-52' : '-translate-x-full lg:translate-x-0 lg:w-20'}`}
       >
         {/* Brand Logo */}
-        <div className="flex flex-row items-center justify-start h-12 mb-12 w-full overflow-hidden shrink-0">
+        <div className="flex flex-row items-center justify-start h-12 mb-6 w-full overflow-hidden shrink-0">
           <div className="w-12 h-12 flex items-center justify-center shrink-0">
-            <div className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-md shadow-orange-500/20">
-              <div className="w-5 h-1.5 bg-white/40 rounded-full absolute top-2.5"></div>
-              <div className="w-6 h-1.5 bg-white/70 rounded-full absolute top-4"></div>
-              <div className="w-5 h-1.5 bg-white/90 rounded-full absolute top-5.5"></div>
-            </div>
+            <img 
+              src={Logo} 
+              alt="MinuteCast Logo" 
+              className="w-10 h-10 object-contain rounded-full shadow-md shadow-orange-500/10"
+            />
           </div>
           <span className={`font-extrabold tracking-widest text-slate-800 uppercase transition-all duration-300 whitespace-nowrap text-xs ${isOpen ? 'opacity-100 max-w-[120px] ml-3' : 'opacity-0 max-w-0 ml-0'
             }`}>
@@ -43,7 +44,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         </div>
 
         {/* Navigation Icons */}
-        <nav className="flex-1 flex flex-col gap-6 w-full items-stretch">
+        <nav className="flex-1 flex flex-col gap-4 w-full items-stretch">
           {menuItems.map((item) => {
             const Icon = item.icon;
 
@@ -62,7 +63,6 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                   : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50/60 font-medium'
                   }`}
               >
-                {/* Active Indicator Bubble (Animated Background) */}
                 {isActiveLink && (
                   <motion.div
                     layoutId="activeTabBubble"
