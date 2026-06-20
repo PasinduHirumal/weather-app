@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import WeatherCard from './components/WeatherCard';
@@ -8,24 +9,67 @@ import TomorrowCard from './components/TomorrowCard';
 import RightPanel from './components/RightPanel';
 
 export default function Home() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [location, setLocation] = useState({
-    name: 'Colombo',
-    latitude: 6.9271,
-    longitude: 79.8612,
-    country: 'Sri Lanka'
+
+  // Initialize location from URL parameters if available, otherwise default to Colombo, Sri Lanka
+  const [location, setLocation] = useState(() => {
+    const lat = searchParams.get('lat');
+    const lon = searchParams.get('lon');
+    const name = searchParams.get('name');
+    const country = searchParams.get('country');
+
+    if (lat && lon && name) {
+      return {
+        name,
+        latitude: parseFloat(lat),
+        longitude: parseFloat(lon),
+        country: country || ''
+      };
+    }
+    return {
+      name: 'Colombo',
+      latitude: 6.9271,
+      longitude: 79.8612,
+      country: 'Sri Lanka'
+    };
   });
+
   const [weatherData, setWeatherData] = useState(null);
   const [airQualityData, setAirQualityData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Set initial sidebar state based on screen width on client side
+  // Sync state with URL search parameters if they change
   useEffect(() => {
-    if (window.innerWidth >= 1024) {
-      setSidebarOpen(true);
+    const lat = searchParams.get('lat');
+    const lon = searchParams.get('lon');
+    const name = searchParams.get('name');
+    const country = searchParams.get('country');
+
+    if (lat && lon && name) {
+      const parsedLat = parseFloat(lat);
+      const parsedLon = parseFloat(lon);
+      if (parsedLat !== location.latitude || parsedLon !== location.longitude || name !== location.name) {
+        setLocation({
+          name,
+          latitude: parsedLat,
+          longitude: parsedLon,
+          country: country || ''
+        });
+      }
     }
-  }, []);
+  }, [searchParams]);
+
+  // Update URL search parameters when location state changes
+  useEffect(() => {
+    setSearchParams({
+      lat: location.latitude.toString(),
+      lon: location.longitude.toString(),
+      name: location.name,
+      country: location.country || ''
+    }, { replace: true });
+  }, [location.latitude, location.longitude, location.name, location.country, setSearchParams]);
 
   // Fetch weather and air quality data concurrently
   const fetchWeatherData = async (lat, lon, name, country) => {
@@ -121,7 +165,13 @@ export default function Home() {
   };
 
   useEffect(() => {
-    handleUseCurrentLocation();
+    // Only request user's location if URL parameters are not set
+    const lat = searchParams.get('lat');
+    const lon = searchParams.get('lon');
+    const name = searchParams.get('name');
+    if (!lat || !lon || !name) {
+      handleUseCurrentLocation();
+    }
   }, []);
 
   const handleSelectLocation = (selected) => {
