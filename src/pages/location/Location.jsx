@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { MapPin, Wind, Droplets, ArrowRight } from 'lucide-react';
 import { getWeatherInfo } from '../../utils/weatherUtils';
 
@@ -14,6 +14,7 @@ const DEFAULT_CITIES = [
 
 export default function Location() {
   const navigate = useNavigate();
+  const { loading: globalLoading } = useOutletContext();
   const [cityData, setCityData] = useState([]);
   const [loadingCities, setLoadingCities] = useState(true);
 
@@ -59,6 +60,12 @@ export default function Location() {
         <h3 className="text-slate-800 text-sm font-extrabold tracking-tight uppercase">
           Location Explorer
         </h3>
+        {globalLoading && (
+          <div className="ml-2 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping"></span>
+            <span className="text-[10px] text-orange-500 font-extrabold uppercase tracking-wider animate-pulse">Loading...</span>
+          </div>
+        )}
       </div>
 
       {loadingCities ? (

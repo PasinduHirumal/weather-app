@@ -32,7 +32,7 @@ export default function Calendar() {
         </div>
       )}
 
-      {loading ? (
+      {loading || !weather ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[...Array(7)].map((_, idx) => (
             <div key={idx} className="h-64 bg-slate-50 border border-slate-100 rounded-[28px] animate-pulse"></div>

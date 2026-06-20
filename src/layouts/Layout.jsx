@@ -145,16 +145,10 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen w-full flex bg-white transition-all duration-300">
-      {/* Main Full-Screen Layout Wrapper */}
       <div className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen lg:overflow-hidden">
-
-        {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
-
-        {/* Dashboard Core Area */}
         <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 justify-between overflow-y-auto lg:h-full lg:overflow-y-auto">
           <div>
-            {/* Header Greeting and Search */}
             <Header
               onSelectLocation={handleSelectLocation}
               location={locationProp}
@@ -181,7 +175,6 @@ export default function Layout() {
           </div>
         </div>
 
-        {/* Right Info Panel (Sun Trajectory, UV Index, Predictions) - Rendered only on Home view */}
         {isHomePage && (
           <RightPanel
             weather={weatherData}
