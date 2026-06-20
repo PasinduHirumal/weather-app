@@ -4,10 +4,14 @@ import Layout from './layouts/Layout';
 import Home from './pages/home/Home';
 import Location from './pages/location/Location';
 import Calendar from './pages/calendar/Calendar';
+import ScrollToTop from './common/ScrollToTop';
+import ScrollToTopButton from './common/ScrollToTopButton';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
+      <ScrollToTopButton />
       <Routes>
         {/* Layout wraps all pages, rendering the active component inside its <Outlet /> */}
         <Route element={<Layout />}>
