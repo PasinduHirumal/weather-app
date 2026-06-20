@@ -32,13 +32,9 @@ const itemVariants = {
 export default function RightPanel({ weather, airQuality, location, loading }) {
   const isLoaded = !loading && !!weather;
 
-  // Set up Framer Motion spring progress value unconditionally
   const progressSpring = useSpring(0, { stiffness: 60, damping: 15 });
-
-  // Ref to track if we should jump the spring instantly without transition animation
   const shouldJumpRef = useRef(true);
 
-  // Helper to parse time strings in "YYYY-MM-DDTHH:MM" format to minutes from midnight
   const getMinutesFromIso = (isoStr) => {
     if (!isoStr) return 0;
     try {
@@ -86,7 +82,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
   const sunriseMinutes = getMinutesFromIso(weather?.daily?.sunrise?.[0]);
   const sunsetMinutes = getMinutesFromIso(weather?.daily?.sunset?.[0]);
 
-  let targetProgress = 0.4; // Fallback
+  let targetProgress = 0.4;
   if (isLoaded && sunriseMinutes && sunsetMinutes && currentMinutes) {
     if (currentMinutes <= sunriseMinutes) {
       targetProgress = 0;
@@ -172,7 +168,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex flex-col justify-between gap-8 h-full w-full animate-pulse"
+            className="flex flex-col justify-between gap-8 min-h-full w-full animate-pulse"
           >
             <div className="flex flex-col gap-4">
               <div className="h-6 w-32 bg-slate-200 rounded-lg"></div>
@@ -193,7 +189,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="flex flex-col justify-between gap-8 h-full w-full"
+            className="flex flex-col justify-between gap-8 min-h-full w-full"
           >
             {/* Sun & Location Temperature section */}
             <motion.div variants={itemVariants} className="flex flex-col gap-4">
