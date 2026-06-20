@@ -5,7 +5,7 @@ import { getWeatherInfo } from '../utils/weatherUtils';
 export default function TomorrowCard({ weather, location, loading }) {
   if (loading || !weather) {
     return (
-      <div className="bg-slate-50 rounded-[32px] p-6 shadow-sm flex flex-col h-[360px] justify-between relative overflow-hidden animate-pulse border border-slate-100">
+      <div className="bg-slate-50 rounded-[32px] p-5 sm:p-6 shadow-sm flex flex-col h-[360px] justify-between relative overflow-hidden animate-pulse border border-slate-100">
         <div className="flex flex-col gap-2">
           <div className="h-4 w-20 bg-slate-200 rounded-lg"></div>
           <div className="h-8 w-44 bg-slate-200 rounded-xl mt-2"></div>
@@ -37,7 +37,7 @@ export default function TomorrowCard({ weather, location, loading }) {
   }
 
   return (
-    <div className={`${cardBg} rounded-[32px] p-6 shadow-sm flex flex-col h-[360px] justify-between relative overflow-hidden group hover:shadow-md transition-all duration-300`}>
+    <div className={`${cardBg} rounded-[32px] p-5 sm:p-6 shadow-sm flex flex-col h-[360px] justify-between relative overflow-hidden group hover:shadow-md transition-all duration-300`}>
       {/* Background illustration */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-90 group-hover:scale-105 transition-transform duration-[600ms] pointer-events-none mix-blend-multiply" 

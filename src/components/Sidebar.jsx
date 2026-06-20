@@ -11,7 +11,19 @@ export default function Sidebar({ isOpen, setIsOpen }) {
   ];
 
   return (
-    <aside className={`bg-white h-full flex flex-col items-center py-8 border-r border-slate-100 transition-all duration-300 ${isOpen ? 'w-20' : 'w-0 overflow-hidden md:w-20'}`}>
+    <>
+      {/* Backdrop overlay for mobile when sidebar is open */}
+      <div
+        onClick={() => setIsOpen(false)}
+        className={`fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      />
+
+      <aside className={`bg-white h-full flex flex-col items-center py-8 border-r border-slate-100 transition-all duration-300 
+        fixed lg:relative inset-y-0 left-0 z-50 lg:z-30 
+        ${isOpen ? 'translate-x-0 w-20' : '-translate-x-full lg:translate-x-0 lg:w-0 lg:overflow-hidden'}`}
+      >
       {/* Brand Logo */}
       <div className="flex flex-col items-center gap-1.5 mb-12">
         <div className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-md shadow-orange-500/20">
@@ -53,5 +65,6 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         {isOpen ? <ChevronLeft size={20} className="stroke-[2.2]" /> : <ChevronRight size={20} className="stroke-[2.2]" />}
       </button>
     </aside>
+    </>
   );
 }

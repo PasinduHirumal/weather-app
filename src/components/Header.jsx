@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, MapPin, Navigation } from 'lucide-react';
+import { Search, Bell, MapPin, Navigation, Menu } from 'lucide-react';
 import avatarImg from '../assets/avatar.png';
 
-export default function Header({ onSelectLocation, location, onUseCurrentLocation }) {
+export default function Header({ onSelectLocation, location, onUseCurrentLocation, onToggleSidebar, sidebarOpen }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -52,6 +52,17 @@ export default function Header({ onSelectLocation, location, onUseCurrentLocatio
     <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mb-8">
       {/* Profile Greeting Section */}
       <div className="flex items-center gap-4">
+        {/* Hamburger Menu Button */}
+        <button
+          onClick={onToggleSidebar}
+          className={`p-2.5 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 ${
+            sidebarOpen ? 'lg:hidden' : 'flex'
+          }`}
+          title="Toggle Sidebar"
+        >
+          <Menu size={18} className="stroke-[2.2] text-orange-500" />
+        </button>
+
         <img
           src={avatarImg}
           alt="Jack Grealish"

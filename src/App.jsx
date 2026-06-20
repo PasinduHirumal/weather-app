@@ -8,7 +8,7 @@ import TomorrowCard from './components/TomorrowCard';
 import RightPanel from './components/RightPanel';
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [location, setLocation] = useState({
     name: 'London',
     latitude: 51.5085,
@@ -19,6 +19,13 @@ function App() {
   const [airQualityData, setAirQualityData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Set initial sidebar state based on screen width on client side
+  useEffect(() => {
+    if (window.innerWidth >= 1024) {
+      setSidebarOpen(true);
+    }
+  }, []);
 
   // Fetch weather and air quality data concurrently
   const fetchWeatherData = async (lat, lon, name, country) => {
@@ -129,19 +136,20 @@ function App() {
   return (
     <div className="min-h-screen w-full flex bg-white transition-all duration-300">
       {/* Main Full-Screen Layout Wrapper */}
-      <div className="flex flex-col lg:flex-row w-full min-h-screen">
+      <div className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen lg:overflow-hidden">
         
         {/* Navigation Sidebar */}
         <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
 
         {/* Dashboard Core Area */}
-        <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 justify-between overflow-y-auto">
+        <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 justify-between overflow-y-auto lg:h-full lg:overflow-y-auto">
           <div>
             {/* Header Greeting and Search */}
             <Header 
               onSelectLocation={handleSelectLocation} 
               location={location} 
               onUseCurrentLocation={handleUseCurrentLocation}
+              onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
             />
 
             {error && (

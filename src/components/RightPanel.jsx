@@ -5,7 +5,7 @@ import { getWeatherInfo, getUviCategory, formatTime, formatDate } from '../utils
 export default function RightPanel({ weather, airQuality, location, loading }) {
   if (loading || !weather) {
     return (
-      <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8 animate-pulse">
+      <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8 lg:h-full lg:overflow-y-auto animate-pulse">
         <div className="flex flex-col gap-4">
           <div className="h-6 w-32 bg-slate-200 rounded-lg"></div>
           <div className="h-28 bg-slate-100 rounded-[28px] mt-2"></div>
@@ -93,7 +93,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
     : location.name;
 
   return (
-    <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8">
+    <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8 lg:h-full lg:overflow-y-auto">
       
       {/* Sun & Location Temperature section */}
       <div className="flex flex-col gap-4">

@@ -8,7 +8,7 @@ export default function TemperatureChartCard({ weather, loading }) {
 
   if (loading || !weather) {
     return (
-      <div className="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] animate-pulse">
+      <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] animate-pulse">
         <div className="flex items-center justify-between">
           <div className="h-6 w-52 bg-slate-200 rounded-lg"></div>
           <div className="h-8 w-24 bg-slate-200 rounded-xl"></div>
@@ -94,7 +94,7 @@ export default function TemperatureChartCard({ weather, loading }) {
   });
 
   return (
-    <div className="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] group hover:shadow-md transition-all duration-300">
+    <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] group hover:shadow-md transition-all duration-300">
       {/* Header and Filter Tabs */}
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-extrabold text-slate-800 tracking-tight max-w-[200px] sm:max-w-none">

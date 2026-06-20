@@ -6,7 +6,7 @@ import { getAqiCategory, getWindDirection } from '../utils/weatherUtils';
 export default function AirQualityCard({ airQuality, weather, loading }) {
   if (loading || !airQuality || !weather) {
     return (
-      <div className="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100/50 flex flex-col h-[320px] justify-between relative overflow-hidden animate-pulse">
+      <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col h-[320px] justify-between relative overflow-hidden animate-pulse">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <div className="w-5 h-5 rounded-full bg-slate-200"></div>
@@ -30,7 +30,7 @@ export default function AirQualityCard({ airQuality, weather, loading }) {
   const percentage = Math.min(Math.max((aqiVal / 500) * 100, 5), 95);
 
   return (
-    <div className="bg-white rounded-[32px] p-6 shadow-sm border border-slate-100/50 flex flex-col h-[320px] justify-between relative overflow-hidden group hover:shadow-md transition-all duration-300">
+    <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col h-[320px] justify-between relative overflow-hidden group hover:shadow-md transition-all duration-300">
       {/* Background illustration */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-90 mix-blend-multiply group-hover:scale-105 transition-transform duration-[600ms] pointer-events-none" 
