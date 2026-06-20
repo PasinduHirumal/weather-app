@@ -26,10 +26,12 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       >
         {/* Brand Logo */}
         <div className="flex flex-row items-center justify-start h-12 mb-12 w-full overflow-hidden shrink-0">
-          <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-md shadow-orange-500/20 shrink-0">
-            <div className="w-5 h-1.5 bg-white/40 rounded-full absolute top-2.5"></div>
-            <div className="w-6 h-1.5 bg-white/70 rounded-full absolute top-4"></div>
-            <div className="w-5 h-1.5 bg-white/90 rounded-full absolute top-5.5"></div>
+          <div className="w-12 h-12 flex items-center justify-center shrink-0">
+            <div className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-md shadow-orange-500/20">
+              <div className="w-5 h-1.5 bg-white/40 rounded-full absolute top-2.5"></div>
+              <div className="w-6 h-1.5 bg-white/70 rounded-full absolute top-4"></div>
+              <div className="w-5 h-1.5 bg-white/90 rounded-full absolute top-5.5"></div>
+            </div>
           </div>
           <span className={`font-extrabold tracking-widest text-slate-800 uppercase transition-all duration-300 whitespace-nowrap text-xs ${
             isOpen ? 'opacity-100 max-w-[120px] ml-3' : 'opacity-0 max-w-0 ml-0'
