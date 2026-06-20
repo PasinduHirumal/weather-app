@@ -1,23 +1,96 @@
-import React, { useState } from 'react';
-import { Sun, ChevronDown, Calendar, Cloud, SunDim } from 'lucide-react';
+import React from 'react';
+import { Sun, Calendar, Navigation } from 'lucide-react';
+import { getWeatherInfo, getUviCategory, formatTime, formatDate } from '../utils/weatherUtils';
 
-export default function RightPanel() {
-  const [location, setLocation] = useState('Banten, Indonesia');
+export default function RightPanel({ weather, airQuality, location, loading }) {
+  if (loading || !weather) {
+    return (
+      <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8 animate-pulse">
+        <div className="flex flex-col gap-4">
+          <div className="h-6 w-32 bg-slate-200 rounded-lg"></div>
+          <div className="h-28 bg-slate-100 rounded-[28px] mt-2"></div>
+        </div>
+        <div className="h-24 bg-slate-150 rounded-[28px]"></div>
+        <div className="flex flex-col gap-4 flex-1 justify-end mt-4">
+          <div className="h-5 w-36 bg-slate-200 rounded-lg mb-2"></div>
+          <div className="h-16 bg-slate-100 rounded-2xl"></div>
+          <div className="h-16 bg-slate-100 rounded-2xl"></div>
+          <div className="h-12 bg-slate-200 rounded-2xl mt-4"></div>
+        </div>
+      </div>
+    );
+  }
 
-  // Sun path arc values
-  // Semicircle arc: starts at 15,90, ends at 185,90, radius 85,85
-  const sunPath = "M 15,90 A 85,85 0 0,1 185,90";
+  const currentTemp = Math.round(weather.current.temperature_2m);
   
-  // Let's place the sun icon at some coordinate along the path. 
-  // Let's calculate for 60% progress:
-  // Center is (100, 90). Radius is 85. 
-  // Angle = 180 * 0.6 = 108 degrees (from right to left, or left to right).
-  // Left to right: 0% is 180 deg (15,90), 50% is 90 deg (100,5), 100% is 0 deg (185,90)
-  // At 40% (mid-morning/afternoon): Angle = 180 - (180 * 0.45) = 99 degrees.
-  // x = 100 + 85 * cos(99 deg) = 100 + 85 * (-0.156) = 86.7
-  // y = 90 - 85 * sin(99 deg) = 90 - 85 * (0.987) = 6.1
-  const sunX = 86;
-  const sunY = 32;
+  // Format sunrise / sunset
+  const sunriseStr = formatTime(weather.daily.sunrise[0]) || '06:00 AM';
+  const sunsetStr = formatTime(weather.daily.sunset[0]) || '06:00 PM';
+
+  // Calculate sun position along the arc dynamically
+  // Semicircle arc: starts at 15,90 (Sunrise), ends at 185,90 (Sunset)
+  const calculateSunPosition = () => {
+    try {
+      const sunriseTime = new Date(weather.daily.sunrise[0]).getTime();
+      const sunsetTime = new Date(weather.daily.sunset[0]).getTime();
+      const currentTime = new Date(weather.current.time).getTime();
+
+      if (currentTime <= sunriseTime) {
+        return { x: 15, y: 90, elapsedPath: 'M 15,90 A 85,85 0 0,1 15,90' };
+      }
+      if (currentTime >= sunsetTime) {
+        return { x: 185, y: 90, elapsedPath: 'M 15,90 A 85,85 0 0,1 185,90' };
+      }
+
+      // Progress fraction between sunrise and sunset
+      const progress = (currentTime - sunriseTime) / (sunsetTime - sunriseTime);
+      
+      // Center (100, 90), Radius 85
+      // Angle: 180 degrees (sunrise, left) to 0 degrees (sunset, right)
+      const angleRad = Math.PI - progress * Math.PI;
+      const x = 100 + 85 * Math.cos(angleRad);
+      const y = 90 - 85 * Math.sin(angleRad);
+
+      return {
+        x: Math.round(x),
+        y: Math.round(y),
+        elapsedPath: `M 15,90 A 85,85 0 0,1 ${Math.round(x)},${Math.round(y)}`
+      };
+    } catch (e) {
+      // Fallback to 40% progress if calculations fail
+      return { x: 86, y: 32, elapsedPath: 'M 15,90 A 85,85 0 0,1 86,32' };
+    }
+  };
+
+  const { x: sunX, y: sunY, elapsedPath } = calculateSunPosition();
+
+  // UV Index processing
+  const uviVal = weather.daily.uv_index_max[0] || 0;
+  const { text: uviText, badgeClass } = getUviCategory(uviVal);
+
+  // Predictions: Days 2 to 6 (5 days total, excluding today and tomorrow)
+  const predictions = [];
+  for (let i = 2; i < 7; i++) {
+    if (weather.daily.time[i]) {
+      const timeVal = weather.daily.time[i];
+      const codeVal = weather.daily.weather_code[i];
+      const { text: desc, icon: IconComponent } = getWeatherInfo(codeVal);
+      const maxT = Math.round(weather.daily.temperature_2m_max[i]);
+      const minT = Math.round(weather.daily.temperature_2m_min[i]);
+
+      predictions.push({
+        date: formatDate(timeVal),
+        desc,
+        tempRange: `${maxT}° / ${minT}°`,
+        icon: IconComponent
+      });
+    }
+  }
+
+  // Location display text
+  const locationText = location.country 
+    ? `${location.name}, ${location.country}`
+    : location.name;
 
   return (
     <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8">
@@ -25,14 +98,13 @@ export default function RightPanel() {
       {/* Sun & Location Temperature section */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
-          <div>
+          <div className="max-w-[70%]">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">Sun</span>
-            <button className="flex items-center gap-1 text-slate-700 hover:text-slate-900 font-bold text-sm mt-1 transition-colors">
-              {location}
-              <ChevronDown size={14} className="stroke-[2.5] text-slate-500" />
-            </button>
+            <div className="flex items-center gap-1.5 text-slate-700 font-bold text-sm mt-1">
+              <span className="truncate" title={locationText}>{locationText}</span>
+            </div>
           </div>
-          <span className="text-3xl font-black text-slate-800">22°C</span>
+          <span className="text-3xl font-black text-slate-800">{currentTemp}°C</span>
         </div>
 
         {/* Sun Trajectory Path (Custom SVG) */}
@@ -40,10 +112,6 @@ export default function RightPanel() {
           <div className="w-full h-[110px] relative mt-2">
             <svg viewBox="0 0 200 100" className="w-full h-full overflow-visible">
               <defs>
-                <linearGradient id="sunPathGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.2" />
-                  <stop offset="100%" stopColor="#EF4444" stopOpacity="0" />
-                </linearGradient>
                 <filter id="glow">
                   <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
                   <feMerge>
@@ -55,7 +123,7 @@ export default function RightPanel() {
 
               {/* Dotted Semicircle Track */}
               <path
-                d={sunPath}
+                d="M 15,90 A 85,85 0 0,1 185,90"
                 fill="none"
                 stroke="#E2E8F0"
                 strokeWidth="2.5"
@@ -64,7 +132,7 @@ export default function RightPanel() {
 
               {/* Filled Semicircle Trajectory for elapsed day */}
               <path
-                d="M 15,90 A 85,85 0 0,1 86,32"
+                d={elapsedPath}
                 fill="none"
                 stroke="#F59E0B"
                 strokeWidth="2.5"
@@ -79,7 +147,6 @@ export default function RightPanel() {
               {/* Sun Position Icon */}
               <g transform={`translate(${sunX}, ${sunY})`} className="animate-pulse">
                 <circle cx="0" cy="0" r="8" fill="#F59E0B" filter="url(#glow)" />
-                {/* Sun rays effect */}
                 <circle cx="0" cy="0" r="12" fill="none" stroke="#F59E0B" strokeWidth="1" strokeDasharray="2 2" className="animate-spin" style={{ transformOrigin: 'center', animationDuration: '10s' }} />
               </g>
             </svg>
@@ -88,12 +155,12 @@ export default function RightPanel() {
           {/* Time text markers */}
           <div className="flex items-center justify-between w-full mt-3 border-t border-slate-50 pt-3 text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
             <div className="text-left">
-              <span className="block text-slate-300">Sunset</span>
-              <span className="text-slate-600 mt-0.5 block">06:00 am</span>
+              <span className="block text-slate-300">Sunrise</span>
+              <span className="text-slate-600 mt-0.5 block">{sunriseStr}</span>
             </div>
             <div className="text-right">
-              <span className="block text-slate-300">Sunrise</span>
-              <span className="text-slate-600 mt-0.5 block">06:45 am</span>
+              <span className="block text-slate-300">Sunset</span>
+              <span className="text-slate-600 mt-0.5 block">{sunsetStr}</span>
             </div>
           </div>
         </div>
@@ -103,13 +170,13 @@ export default function RightPanel() {
       <div className="bg-[#1E293B] text-white rounded-[28px] p-5 shadow-md flex items-center justify-between group hover:-translate-y-1 transition-all duration-300">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-black text-white">20 UVI</span>
-            <span className="text-[9px] font-extrabold text-lime-700 bg-lime-300 px-2 py-0.5 rounded-full uppercase tracking-wider">
-              Moderate
+            <span className="text-xl font-black text-white">{Math.round(uviVal)} UVI</span>
+            <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider ${badgeClass}`}>
+              {uviText}
             </span>
           </div>
           <p className="text-xs text-slate-300 mt-1 font-medium leading-relaxed max-w-[170px]">
-            Moderate risk of from UV rays
+            {uviVal <= 2 ? 'Low risk from UV rays.' : uviVal <= 5 ? 'Moderate risk of skin damage.' : 'High risk. Take sun protection.'}
           </p>
         </div>
         
@@ -126,38 +193,30 @@ export default function RightPanel() {
 
         {/* Prediction list */}
         <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between bg-white border border-slate-100/50 rounded-2xl p-4 shadow-sm group hover:border-slate-200 transition-all duration-300">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-500">
-                <Cloud className="stroke-[2.2]" size={20} />
+          {predictions.map((day, idx) => {
+            const Icon = day.icon;
+            return (
+              <div key={idx} className="flex items-center justify-between bg-white border border-slate-100/50 rounded-2xl p-4 shadow-sm group hover:border-slate-200 transition-all duration-300">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-500 group-hover:scale-105 transition-transform">
+                    <Icon className="stroke-[2.2] text-orange-500" size={20} />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold text-slate-700">{day.date}</span>
+                    <span className="text-[11px] text-slate-400 font-semibold block mt-0.5">{day.desc}</span>
+                  </div>
+                </div>
+                <span className="text-xs font-black text-slate-800 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100/50">{day.tempRange}</span>
               </div>
-              <div>
-                <span className="text-xs font-bold text-slate-700">November 10</span>
-                <span className="text-[11px] text-slate-400 font-semibold block mt-0.5">Cloudy</span>
-              </div>
-            </div>
-            <span className="text-xs font-black text-slate-800 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100/50">26° / 19°</span>
-          </div>
-
-          <div className="flex items-center justify-between bg-white border border-slate-100/50 rounded-2xl p-4 shadow-sm group hover:border-slate-200 transition-all duration-300">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-amber-50 text-amber-500">
-                <SunDim className="stroke-[2.2]" size={20} />
-              </div>
-              <div>
-                <span className="text-xs font-bold text-slate-700">November 11</span>
-                <span className="text-[11px] text-slate-400 font-semibold block mt-0.5">Bright</span>
-              </div>
-            </div>
-            <span className="text-xs font-black text-slate-800 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100/50">26° / 20°</span>
-          </div>
+            );
+          })}
         </div>
 
-        {/* Next 5 Days Action Button */}
-        <button className="w-full py-3.5 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2.5 shadow-md shadow-orange-500/25 hover:shadow-lg hover:shadow-orange-500/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 group mt-2">
+        {/* Action / Branding Display */}
+        <div className="w-full py-3.5 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2.5 shadow-md shadow-orange-500/25 mt-2 select-none">
           <Calendar size={14} className="stroke-[2.5]" />
-          Next 5 Days
-        </button>
+          Forecast Monitor
+        </div>
       </div>
 
     </div>
