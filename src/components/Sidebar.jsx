@@ -35,7 +35,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           </div>
           <span className={`font-extrabold tracking-widest text-slate-800 uppercase transition-all duration-300 whitespace-nowrap text-xs ${isOpen ? 'opacity-100 max-w-[120px] ml-3' : 'opacity-0 max-w-0 ml-0'
             }`}>
-            Ngijih
+            MinuteCast
           </span>
         </div>
 

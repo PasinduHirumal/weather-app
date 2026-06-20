@@ -84,7 +84,7 @@ export default function Layout() {
           try {
             const revGeoUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`;
             const res = await fetch(revGeoUrl, {
-              headers: { 'User-Agent': 'NgijihWeatherApp/1.0' }
+              headers: { 'User-Agent': 'MinuteCast/1.0' }
             });
             if (res.ok) {
               const data = await res.json();
