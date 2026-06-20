@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Home, MapPin, Calendar, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const location = useLocation();
@@ -55,18 +56,27 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 key={item.id}
                 to={`${item.path}${location.search}`}
                 onClick={() => setIsOpen(false)}
-                className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group overflow-hidden ${isActiveLink
-                    ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/35 font-bold'
-                    : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50 font-medium'
+                className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group ${isActiveLink
+                    ? 'text-white font-bold'
+                    : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50/60 font-medium'
                   }`}
               >
+                {/* Active Indicator Bubble (Animated Background) */}
+                {isActiveLink && (
+                  <motion.div
+                    layoutId="activeTabBubble"
+                    className="absolute inset-0 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl z-0 shadow-md shadow-orange-500/30"
+                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                  />
+                )}
+
                 {/* Icon Wrapper */}
-                <div className="w-12 h-12 flex items-center justify-center shrink-0">
+                <div className="w-12 h-12 flex items-center justify-center shrink-0 z-10">
                   <Icon size={20} className="stroke-[2.2]" />
                 </div>
 
                 {/* Text Label */}
-                <span className={`capitalize text-sm tracking-wide transition-all duration-300 whitespace-nowrap ${isOpen ? 'opacity-100 max-w-[120px] ml-2' : 'opacity-0 max-w-0 ml-0'
+                <span className={`capitalize text-sm tracking-wide transition-all duration-300 whitespace-nowrap z-10 ${isOpen ? 'opacity-100 max-w-[120px] ml-2' : 'opacity-0 max-w-0 ml-0'
                   }`}>
                   {item.id}
                 </span>
