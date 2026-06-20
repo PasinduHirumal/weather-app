@@ -49,8 +49,8 @@ export default function TomorrowCard({ weather, location, loading }) {
 
       {/* Top Details (Foreground) */}
       <div className="relative z-10 flex flex-col gap-0.5 text-slate-800">
-        <span className="text-xs font-bold text-slate-750 uppercase tracking-widest flex items-center gap-1.5">
-          <WeatherIcon size={14} className="text-slate-850" />
+        <span className="text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-1.5">
+          <WeatherIcon size={14} className="text-slate-800" />
           Tomorrow
         </span>
         <h3 className="text-2xl font-black text-slate-900 tracking-tight mt-1 truncate">
@@ -59,7 +59,7 @@ export default function TomorrowCard({ weather, location, loading }) {
       </div>
 
       {/* Bottom Temperature Details (Foreground) */}
-      <div className="relative z-10 mt-auto text-slate-955">
+      <div className="relative z-10 mt-auto text-slate-900">
         <span className="text-4xl font-extrabold tracking-tight">{tomorrowTemp}°C</span>
         <p className="text-sm font-extrabold mt-0.5">{weatherDesc}</p>
       </div>

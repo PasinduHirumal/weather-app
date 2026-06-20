@@ -101,7 +101,7 @@ export default function Calendar() {
                   {/* Temp and Description */}
                   <div className="my-3">
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-black text-slate-850 tracking-tight">{maxT}°C</span>
+                      <span className="text-2xl font-black text-slate-800 tracking-tight">{maxT}°C</span>
                       <span className="text-slate-400 text-xs font-bold">/ {minT}°C</span>
                     </div>
                     <p className="text-xs text-slate-500 font-bold mt-0.5">{desc}</p>

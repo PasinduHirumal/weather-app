@@ -125,7 +125,7 @@ export default function Location() {
 
                   <div className="flex items-end justify-between mt-4">
                     <div>
-                      <span className="text-3xl font-extrabold text-slate-850 tracking-tight">{city.temp}°C</span>
+                      <span className="text-3xl font-extrabold text-slate-800 tracking-tight">{city.temp}°C</span>
                       <p className="text-xs text-slate-500 font-bold mt-0.5 leading-none">{desc}</p>
                     </div>
 

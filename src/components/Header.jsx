@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, MapPin, Navigation, Menu, Clock } from 'lucide-react';
+import { Search, MapPin, Navigation, Menu, Clock } from 'lucide-react';
 
 export default function Header({ onSelectLocation, location, weather, onUseCurrentLocation, onToggleSidebar, sidebarOpen }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -74,7 +74,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
   };
 
   return (
-    <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mb-8">
+    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100/80">
       {/* Profile Greeting Section */}
       <div className="flex items-center gap-4">
         <button

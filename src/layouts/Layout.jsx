@@ -62,6 +62,18 @@ export default function Layout() {
     fetchWeatherData(locationProp.latitude, locationProp.longitude, locationProp.name, locationProp.country);
   }, [locationProp.latitude, locationProp.longitude]);
 
+  // Lock body scroll when mobile sidebar is open
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [sidebarOpen]);
+
   const handleSelectLocation = (selected) => {
     if (selected.latitude === locationProp.latitude && selected.longitude === locationProp.longitude) {
       fetchWeatherData(selected.latitude, selected.longitude, selected.name, selected.country || '');
@@ -147,8 +159,8 @@ export default function Layout() {
     <div className="min-h-screen w-full flex bg-white transition-all duration-300">
       <div className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen lg:overflow-hidden">
         <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
-        <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 justify-between overflow-y-auto lg:h-full lg:overflow-y-auto">
-          <div>
+        <div className="flex-1 flex flex-col justify-between lg:overflow-y-auto lg:h-full">
+          <div className="w-full flex flex-col flex-1">
             <Header
               onSelectLocation={handleSelectLocation}
               location={locationProp}
@@ -157,21 +169,23 @@ export default function Layout() {
               onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
             />
 
-            {error && (
-              <div className="mb-6 p-4 bg-orange-50 border border-orange-200 text-orange-800 rounded-2xl text-sm font-medium flex items-center justify-between animate-fadeIn">
-                <span>{error}</span>
-                <button onClick={() => fetchWeatherData(locationProp.latitude, locationProp.longitude, locationProp.name, locationProp.country)} className="underline font-bold hover:text-orange-900 ml-2">Retry</button>
-              </div>
-            )}
+            <div className="flex-1 p-4 sm:p-6 lg:p-8 pt-6 sm:pt-6 lg:pt-6">
+              {error && (
+                <div className="mb-6 p-4 bg-orange-50 border border-orange-200 text-orange-800 rounded-2xl text-sm font-medium flex items-center justify-between animate-fadeIn">
+                  <span>{error}</span>
+                  <button onClick={() => fetchWeatherData(locationProp.latitude, locationProp.longitude, locationProp.name, locationProp.country)} className="underline font-bold hover:text-orange-900 ml-2">Retry</button>
+                </div>
+              )}
 
-            {/* Outlets for pages body */}
-            <Outlet context={{
-              location: locationProp,
-              weather: weatherData,
-              airQuality: airQualityData,
-              loading,
-              error
-            }} />
+              {/* Outlets for pages body */}
+              <Outlet context={{
+                location: locationProp,
+                weather: weatherData,
+                airQuality: airQualityData,
+                loading,
+                error
+              }} />
+            </div>
           </div>
         </div>
 

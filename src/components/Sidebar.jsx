@@ -53,6 +53,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               <NavLink
                 key={item.id}
                 to={`${item.path}${location.search}`}
+                onClick={() => setIsOpen(false)}
                 className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group overflow-hidden ${isActiveLink
                     ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/35 font-bold'
                     : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50 font-medium'
