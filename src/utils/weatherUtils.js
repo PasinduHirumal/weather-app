@@ -1,13 +1,4 @@
-import { 
-  Sun, 
-  CloudSun, 
-  Cloud, 
-  CloudRain, 
-  CloudSnow, 
-  CloudLightning, 
-  CloudDrizzle, 
-  Wind
-} from 'lucide-react';
+import { Sun, CloudSun, Cloud, CloudRain, CloudSnow, CloudLightning, CloudDrizzle, Wind } from 'lucide-react';
 
 // Maps WMO Weather Codes to descriptions and Lucide Icons
 // Reference: WMO weather codes on Open-Meteo
@@ -15,7 +6,7 @@ export function getWeatherInfo(code) {
   if (code === undefined || code === null) {
     return { text: 'Unknown', icon: Cloud };
   }
-  
+
   switch (code) {
     case 0:
       return { text: 'Clear Sky', icon: Sun };
@@ -72,7 +63,7 @@ export function getAqiCategory(aqi) {
   if (aqi === undefined || aqi === null) {
     return { text: 'Unknown', colorClass: 'text-slate-500 bg-slate-100', standardLevel: 'Unknown' };
   }
-  
+
   if (aqi <= 50) {
     return { text: 'Good', colorClass: 'text-[#558B2F] bg-[#EBF7E3] border-[#C5E1A5]/30', standardLevel: 'Good' };
   } else if (aqi <= 100) {
@@ -109,9 +100,9 @@ export function getWindDirection(deg) {
   if (deg === undefined || deg === null) return 'N Wind';
   const val = Math.floor((deg / 22.5) + 0.5);
   const directions = [
-    'North', 'NNE', 'NE', 'ENE', 
-    'East', 'ESE', 'SE', 'SSE', 
-    'South', 'SSW', 'SW', 'WSW', 
+    'North', 'NNE', 'NE', 'ENE',
+    'East', 'ESE', 'SE', 'SSE',
+    'South', 'SSW', 'SW', 'WSW',
     'West', 'WNW', 'NW', 'NNW'
   ];
   return (directions[(val % 16)] || 'N') + ' Wind';

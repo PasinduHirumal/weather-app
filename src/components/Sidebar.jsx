@@ -16,9 +16,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       {/* Backdrop overlay for mobile when sidebar is open */}
       <div
         onClick={() => setIsOpen(false)}
-        className={`fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
       />
 
       <aside className={`bg-white h-full flex flex-col py-8 border-r border-slate-100 transition-all duration-300 
@@ -34,9 +33,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               <div className="w-5 h-1.5 bg-white/90 rounded-full absolute top-5.5"></div>
             </div>
           </div>
-          <span className={`font-extrabold tracking-widest text-slate-800 uppercase transition-all duration-300 whitespace-nowrap text-xs ${
-            isOpen ? 'opacity-100 max-w-[120px] ml-3' : 'opacity-0 max-w-0 ml-0'
-          }`}>
+          <span className={`font-extrabold tracking-widest text-slate-800 uppercase transition-all duration-300 whitespace-nowrap text-xs ${isOpen ? 'opacity-100 max-w-[120px] ml-3' : 'opacity-0 max-w-0 ml-0'
+            }`}>
             Ngijih
           </span>
         </div>
@@ -45,21 +43,20 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <nav className="flex-1 flex flex-col gap-6 w-full items-stretch">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            
+
             // Check if the current navlink is active
-            const isActiveLink = 
-              location.pathname === item.path || 
+            const isActiveLink =
+              location.pathname === item.path ||
               (item.path !== '/' && location.pathname.startsWith(item.path));
 
             return (
               <NavLink
                 key={item.id}
                 to={`${item.path}${location.search}`}
-                className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group overflow-hidden ${
-                  isActiveLink
+                className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group overflow-hidden ${isActiveLink
                     ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/35 font-bold'
                     : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50 font-medium'
-                }`}
+                  }`}
               >
                 {/* Icon Wrapper */}
                 <div className="w-12 h-12 flex items-center justify-center shrink-0">
@@ -67,16 +64,14 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 </div>
 
                 {/* Text Label */}
-                <span className={`capitalize text-sm tracking-wide transition-all duration-300 whitespace-nowrap ${
-                  isOpen ? 'opacity-100 max-w-[120px] ml-2' : 'opacity-0 max-w-0 ml-0'
-                }`}>
+                <span className={`capitalize text-sm tracking-wide transition-all duration-300 whitespace-nowrap ${isOpen ? 'opacity-100 max-w-[120px] ml-2' : 'opacity-0 max-w-0 ml-0'
+                  }`}>
                   {item.id}
                 </span>
 
                 {/* Tooltip */}
-                <span className={`absolute left-20 bg-slate-800 text-white text-xs px-2.5 py-1.5 rounded-lg opacity-0 pointer-events-none transition-opacity duration-200 capitalize font-medium z-50 shadow-md ${
-                  isOpen ? 'hidden' : 'group-hover:opacity-100'
-                }`}>
+                <span className={`absolute left-20 bg-slate-800 text-white text-xs px-2.5 py-1.5 rounded-lg opacity-0 pointer-events-none transition-opacity duration-200 capitalize font-medium z-50 shadow-md ${isOpen ? 'hidden' : 'group-hover:opacity-100'
+                  }`}>
                   {item.id}
                 </span>
               </NavLink>

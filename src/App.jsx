@@ -15,7 +15,7 @@ function App() {
           <Route path="/location" element={<Location />} />
           <Route path="/calendar" element={<Calendar />} />
         </Route>
-        
+
         {/* Fallback route - redirect to Home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
