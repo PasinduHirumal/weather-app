@@ -20,11 +20,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       {/* Backdrop overlay for mobile when sidebar is open */}
       <div
         onClick={() => setIsOpen(false)}
-        className={`fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        className={`fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
       />
 
-      <aside className={`bg-white h-full flex flex-col py-8 border-r border-slate-100 transition-all duration-300 
+      <aside className={`bg-white h-full flex flex-col py-5 border-r border-slate-100 transition-all duration-300 
         fixed lg:relative inset-y-0 left-0 z-50 lg:z-30 px-4 items-stretch
         ${isOpen ? 'translate-x-0 w-52' : '-translate-x-full lg:translate-x-0 lg:w-20'}`}
       >
