@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, MapPin, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Home, MapPin, Calendar, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const location = useLocation();
@@ -9,6 +9,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
     { icon: Home, id: 'home', path: '/' },
     { icon: MapPin, id: 'location', path: '/location' },
     { icon: Calendar, id: 'calendar', path: '/calendar' },
+    { icon: Activity, id: 'monitor', path: '/monitor' },
   ];
 
   return (

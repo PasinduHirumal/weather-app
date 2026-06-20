@@ -4,6 +4,7 @@ import Layout from './layouts/Layout';
 import Home from './pages/home/Home';
 import Location from './pages/location/Location';
 import Calendar from './pages/calendar/Calendar';
+import Monitor from './pages/monitor/Monitor';
 import ScrollToTop from './common/ScrollToTop';
 import ScrollToTopButton from './common/ScrollToTopButton';
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/location" element={<Location />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/monitor" element={<Monitor />} />
         </Route>
 
         {/* Fallback route - redirect to Home */}
