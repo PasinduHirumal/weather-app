@@ -123,12 +123,32 @@ export default function Home() {
               const data = await res.json();
               const cityName = data.address.city || data.address.town || data.address.village || data.address.suburb || 'Current Location';
               const countryName = data.address.country || '';
-              setLocation({
-                name: cityName,
-                latitude,
-                longitude,
-                country: countryName
-              });
+              
+              if (latitude === location.latitude && longitude === location.longitude) {
+                fetchWeatherData(latitude, longitude, cityName, countryName);
+              } else {
+                setLocation({
+                  name: cityName,
+                  latitude,
+                  longitude,
+                  country: countryName
+                });
+              }
+            } else {
+              if (latitude === location.latitude && longitude === location.longitude) {
+                fetchWeatherData(latitude, longitude, 'Current Location', '');
+              } else {
+                setLocation({
+                  name: 'Current Location',
+                  latitude,
+                  longitude,
+                  country: ''
+                });
+              }
+            }
+          } catch (e) {
+            if (latitude === location.latitude && longitude === location.longitude) {
+              fetchWeatherData(latitude, longitude, 'Current Location', '');
             } else {
               setLocation({
                 name: 'Current Location',
@@ -137,13 +157,6 @@ export default function Home() {
                 country: ''
               });
             }
-          } catch (e) {
-            setLocation({
-              name: 'Current Location',
-              latitude,
-              longitude,
-              country: ''
-            });
           }
         },
         (err) => {
@@ -156,6 +169,8 @@ export default function Home() {
               longitude: 79.8612,
               country: 'Sri Lanka'
             });
+          } else {
+            setLoading(false);
           }
         }
       );
@@ -164,15 +179,17 @@ export default function Home() {
     }
   };
 
-
-
   const handleSelectLocation = (selected) => {
-    setLocation({
-      name: selected.name,
-      latitude: selected.latitude,
-      longitude: selected.longitude,
-      country: selected.country || ''
-    });
+    if (selected.latitude === location.latitude && selected.longitude === location.longitude) {
+      fetchWeatherData(selected.latitude, selected.longitude, selected.name, selected.country || '');
+    } else {
+      setLocation({
+        name: selected.name,
+        latitude: selected.latitude,
+        longitude: selected.longitude,
+        country: selected.country || ''
+      });
+    }
   };
 
   return (
