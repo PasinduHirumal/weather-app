@@ -14,7 +14,6 @@ function App() {
       <ScrollToTop />
       <ScrollToTopButton />
       <Routes>
-        {/* Layout wraps all pages, rendering the active component inside its <Outlet /> */}
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/location" element={<Location />} />
@@ -22,7 +21,6 @@ function App() {
           <Route path="/monitor" element={<Monitor />} />
         </Route>
 
-        {/* Fallback route - redirect to Home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
