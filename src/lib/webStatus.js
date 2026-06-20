@@ -1,0 +1,1 @@
+export const showMonitor = import.meta.env.VITE_APP_STATUS === 'development';

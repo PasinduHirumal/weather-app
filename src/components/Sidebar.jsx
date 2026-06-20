@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Home, MapPin, Calendar, ChevronLeft, ChevronRight, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { showMonitor } from '../lib/webStatus';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
   const location = useLocation();
@@ -10,7 +11,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
     { icon: Home, id: 'home', path: '/' },
     { icon: MapPin, id: 'location', path: '/location' },
     { icon: Calendar, id: 'calendar', path: '/calendar' },
-    { icon: Activity, id: 'monitor', path: '/monitor' },
+    ...(showMonitor ? [{ icon: Activity, id: 'monitor', path: '/monitor' }] : []),
   ];
 
   return (
@@ -57,8 +58,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 to={`${item.path}${location.search}`}
                 onClick={() => setIsOpen(false)}
                 className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group ${isActiveLink
-                    ? 'text-white font-bold'
-                    : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50/60 font-medium'
+                  ? 'text-white font-bold'
+                  : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50/60 font-medium'
                   }`}
               >
                 {/* Active Indicator Bubble (Animated Background) */}

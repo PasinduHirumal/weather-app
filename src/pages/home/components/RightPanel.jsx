@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Sun, Calendar, Navigation } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { getWeatherInfo, getUviCategory, formatTime, formatDate } from '../../../utils/weatherUtils';
+import { showMonitor } from '../../../lib/webStatus';
 
 export default function RightPanel({ weather, airQuality, location, loading }) {
   if (loading || !weather) {
@@ -220,13 +221,15 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
         </div>
 
         {/* Action / Branding Display */}
-        <Link
-          to={`/monitor${window.location.search || ''}`}
-          className="w-full py-3.5 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2.5 shadow-md shadow-orange-500/25 mt-2 select-none hover:shadow-lg hover:shadow-orange-500/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
-        >
-          <Calendar size={14} className="stroke-[2.5]" />
-          Forecast Monitor
-        </Link>
+        {showMonitor && (
+          <Link
+            to={`/monitor${window.location.search || ''}`}
+            className="w-full py-3.5 bg-gradient-to-br from-orange-500 to-amber-500 text-white rounded-2xl font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2.5 shadow-md shadow-orange-500/25 mt-2 select-none hover:shadow-lg hover:shadow-orange-500/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
+          >
+            <Calendar size={14} className="stroke-[2.5]" />
+            Forecast Monitor
+          </Link>
+        )}
       </div>
 
     </motion.div>
