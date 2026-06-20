@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet, useSearchParams, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 import RightPanel from '../pages/home/components/RightPanel';
@@ -12,6 +13,7 @@ export default function Layout() {
   const [airQualityData, setAirQualityData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLargeScreen, setIsLargeScreen] = useState(typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
 
   const lat = searchParams.get('lat') || '6.9271';
   const lon = searchParams.get('lon') || '79.8612';
@@ -73,6 +75,16 @@ export default function Layout() {
       document.body.style.overflow = '';
     };
   }, [sidebarOpen]);
+
+  // Listen to window size changes for responsive animation setup
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSelectLocation = (selected) => {
     if (selected.latitude === locationProp.latitude && selected.longitude === locationProp.longitude) {
@@ -189,14 +201,28 @@ export default function Layout() {
           </div>
         </div>
 
-        {isHomePage && (
-          <RightPanel
-            weather={weatherData}
-            airQuality={airQualityData}
-            location={locationProp}
-            loading={loading}
-          />
-        )}
+        <AnimatePresence>
+          {isHomePage && (
+            <motion.div
+              key="right-panel-wrapper"
+              initial={isLargeScreen ? { width: 0, opacity: 0 } : { height: 0, opacity: 0 }}
+              animate={isLargeScreen ? { width: 350, opacity: 1 } : { height: 'auto', opacity: 1 }}
+              exit={isLargeScreen ? { width: 0, opacity: 0 } : { height: 0, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+              style={{ overflow: 'hidden' }}
+              className="w-full lg:w-auto flex-shrink-0 lg:h-full border-t lg:border-t-0 lg:border-l border-slate-100/70"
+            >
+              <div className="w-full lg:w-[350px] h-full">
+                <RightPanel
+                  weather={weatherData}
+                  airQuality={airQualityData}
+                  location={locationProp}
+                  loading={loading}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </div>
