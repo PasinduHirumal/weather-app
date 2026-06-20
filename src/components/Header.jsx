@@ -64,7 +64,7 @@ export default function Header({ onSelectLocation, location, onUseCurrentLocatio
         <img
           src={avatarImg}
           alt="Jack Grealish"
-          className="w-12 h-12 rounded-2xl object-cover border border-slate-100 shadow-sm"
+          className="w-12 h-12 rounded-full object-cover border border-slate-100 shadow-sm"
         />
         <div>
           <span className="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Hello,</span>
