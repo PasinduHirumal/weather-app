@@ -10,10 +10,10 @@ import RightPanel from './components/RightPanel';
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [location, setLocation] = useState({
-    name: 'London',
-    latitude: 51.5085,
-    longitude: -0.1257,
-    country: 'United Kingdom'
+    name: 'Colombo',
+    latitude: 6.9271,
+    longitude: 79.8612,
+    country: 'Sri Lanka'
   });
   const [weatherData, setWeatherData] = useState(null);
   const [airQualityData, setAirQualityData] = useState(null);
@@ -104,13 +104,13 @@ export default function Home() {
         },
         (err) => {
           console.warn('Geolocation access denied/failed:', err);
-          // If browser location fails, stick to current location (or default London)
+          // If browser location fails, stick to current location (or default Colombo)
           if (!weatherData) {
             setLocation({
-              name: 'London',
-              latitude: 51.5085,
-              longitude: -0.1257,
-              country: 'United Kingdom'
+              name: 'Colombo',
+              latitude: 6.9271,
+              longitude: 79.8612,
+              country: 'Sri Lanka'
             });
           }
         }
