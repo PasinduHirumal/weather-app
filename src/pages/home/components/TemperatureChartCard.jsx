@@ -4,7 +4,7 @@ import { getWeatherInfo } from '../../../utils/weatherUtils';
 
 export default function TemperatureChartCard({ weather, loading }) {
   const [activeTab, setActiveTab] = useState('temp');
-  const [hoveredIndex, setHoveredIndex] = useState(1); // Default afternoon active
+  const [hoveredIndex, setHoveredIndex] = useState(1);
 
   if (loading || !weather) {
     return (
@@ -23,8 +23,6 @@ export default function TemperatureChartCard({ weather, loading }) {
       </div>
     );
   }
-
-  // Hourly indices: Morning (8 AM = index 8), Afternoon (2 PM = index 14), Evening (6 PM = index 18), Night (10 PM = index 22)
   const timeSlots = [
     { label: 'Morning', time: '08:00 AM', index: 8 },
     { label: 'Afternoon', time: '02:00 PM', index: 14 },
@@ -48,23 +46,20 @@ export default function TemperatureChartCard({ weather, loading }) {
   const maxVal = Math.max(...values);
   const range = maxVal - minVal || 1;
 
-  // Scale Y coordinates between 45 (high peak) and 115 (low trough)
   const yCoords = values.map(val => {
     if (activeTab === 'rain') {
-      // Scale rain probability (0 to 100%) directly
-      return 115 - (val / 100) * 70;
+      return 80 - (val / 100) * 50;
     }
-    // Scale temp or wind speed dynamically
-    return 115 - ((val - minVal) / range) * 70;
+    return 80 - ((val - minVal) / range) * 50;
   });
 
-  const xCoords = [62, 172, 282, 392];
+  const xCoords = [12.5, 37.5, 62.5, 87.5];
 
   // Generate bezier path
   const wavePath = `M ${xCoords[0]},${yCoords[0]} ` +
-    `C ${xCoords[0] + 55},${yCoords[0]} ${xCoords[1] - 55},${yCoords[1]} ${xCoords[1]},${yCoords[1]} ` +
-    `C ${xCoords[1] + 55},${yCoords[1]} ${xCoords[2] - 55},${yCoords[2]} ${xCoords[2]},${yCoords[2]} ` +
-    `C ${xCoords[2] + 55},${yCoords[2]} ${xCoords[3] - 55},${yCoords[3]} ${xCoords[3]},${yCoords[3]}`;
+    `C ${xCoords[0] + 12.5},${yCoords[0]} ${xCoords[1] - 12.5},${yCoords[1]} ${xCoords[1]},${yCoords[1]} ` +
+    `C ${xCoords[1] + 12.5},${yCoords[1]} ${xCoords[2] - 12.5},${yCoords[2]} ${xCoords[2]},${yCoords[2]} ` +
+    `C ${xCoords[2] + 12.5},${yCoords[2]} ${xCoords[3] - 12.5},${yCoords[3]} ${xCoords[3]},${yCoords[3]}`;
 
   // Build points with labels
   const dataPoints = timeSlots.map((slot, idx) => {
@@ -150,109 +145,97 @@ export default function TemperatureChartCard({ weather, loading }) {
         </div>
       </div>
 
-      {/* SVG Chart Container */}
+      {/* SVG & HTML Chart Container */}
       <div className="relative flex-1 flex items-center justify-center mt-4">
-        <svg 
-          viewBox="0 0 450 150" 
-          className="w-full h-full max-h-[160px] overflow-visible"
-        >
-          {/* Defs for gradients & shadow filters */}
-          <defs>
-            <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#F97316" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="#F97316" stopOpacity="0.0" />
-            </linearGradient>
-            <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-              <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#F97316" floodOpacity="0.15" />
-            </filter>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#FBBF24" />
-              <stop offset="50%" stopColor="#F97316" />
-              <stop offset="100%" stopColor="#F87171" />
-            </linearGradient>
-          </defs>
+        <div className="relative w-full h-[150px]">
+          <svg 
+            viewBox="0 0 100 100" 
+            preserveAspectRatio="none"
+            className="w-full h-full overflow-visible"
+          >
+            <defs>
+              <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#F97316" stopOpacity={0.12} />
+                <stop offset="100%" stopColor="#F97316" stopOpacity={0.0} />
+              </linearGradient>
+              <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+                <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#F97316" floodOpacity="0.15" />
+              </filter>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#FBBF24" />
+                <stop offset="50%" stopColor="#F97316" />
+                <stop offset="100%" stopColor="#F87171" />
+              </linearGradient>
+            </defs>
 
-          {/* Area fill under curve */}
-          <path 
-            d={`${wavePath} L 392,150 L 62,150 Z`} 
-            fill="url(#chartGradient)" 
-            className="transition-all duration-500"
-          />
+            {/* Area fill under curve */}
+            <path 
+              d={`${wavePath} L 87.5,100 L 12.5,100 Z`} 
+              fill="url(#chartGradient)" 
+              className="transition-all duration-500"
+            />
 
-          {/* Connection Wave Curve */}
-          <path
-            d={wavePath}
-            fill="none"
-            stroke="url(#lineGradient)"
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            className="transition-all duration-500"
-            filter="url(#shadow)"
-          />
+            {/* Connection Wave Curve */}
+            <path
+              d={wavePath}
+              fill="none"
+              stroke="url(#lineGradient)"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+              className="transition-all duration-500"
+              filter="url(#shadow)"
+              style={{ vectorEffect: 'non-scaling-stroke' }}
+            />
+          </svg>
 
-          {/* Hover guidelines */}
           {hoveredIndex !== null && dataPoints[hoveredIndex] && (
-            <line
-              x1={dataPoints[hoveredIndex].x}
-              y1={dataPoints[hoveredIndex].y}
-              x2={dataPoints[hoveredIndex].x}
-              y2={135}
-              stroke="#E2E8F0"
-              strokeWidth="1.5"
-              strokeDasharray="4 4"
-              className="animate-pulse"
+            <div
+              className="absolute border-l border-dashed border-slate-200 pointer-events-none animate-pulse"
+              style={{
+                left: `${dataPoints[hoveredIndex].x}%`,
+                top: `${dataPoints[hoveredIndex].y}%`,
+                bottom: '0px',
+                transform: 'translateX(-50%)',
+                transition: 'left 0.5s ease, top 0.5s ease',
+              }}
             />
           )}
-
-          {/* Data Points */}
           {dataPoints.map((point, index) => {
             const IconComponent = point.icon;
             const isHovered = hoveredIndex === index;
             
             return (
-              <g 
-                key={index} 
-                className="cursor-pointer"
+              <div 
+                key={index}
+                className="absolute group/point"
+                style={{
+                  left: `${point.x}%`,
+                  top: `${point.y}%`,
+                  transform: 'translate(-50%, -50%)',
+                  transition: 'left 0.5s ease, top 0.5s ease',
+                }}
                 onMouseEnter={() => setHoveredIndex(index)}
               >
-                {/* Invisible larger hover trigger area */}
-                <circle
-                  cx={point.x}
-                  cy={point.y}
-                  r="24"
-                  fill="transparent"
-                />
-
-                {/* Styled weather icon above point */}
-                <foreignObject 
-                  x={point.x - 14} 
-                  y={point.y - 44} 
-                  width="28" 
-                  height="28"
-                  className="overflow-visible"
-                >
-                  <div className={`flex items-center justify-center w-7 h-7 rounded-full bg-white shadow-sm border border-slate-100 transition-all duration-350 ${isHovered ? 'scale-120 border-orange-200' : 'opacity-85'}`}>
+                {/* Larger hover trigger target */}
+                <div className="absolute w-12 h-12 -translate-x-1/2 -translate-y-1/2 rounded-full cursor-pointer z-20" />
+                <div className="absolute -translate-y-11 -translate-x-1/2 z-10 pointer-events-none">
+                  <div className={`flex items-center justify-center w-7 h-7 rounded-full bg-white shadow-sm border border-slate-100 transition-all duration-300 ${
+                    isHovered ? 'scale-110 border-orange-200' : 'opacity-85'
+                  }`}>
                     <IconComponent className={`stroke-[2.2] ${isHovered ? 'text-orange-500' : 'text-slate-400'}`} size={14} />
                   </div>
-                </foreignObject>
-
-                {/* Point dot on the line */}
-                <circle
-                  cx={point.x}
-                  cy={point.y}
-                  r={isHovered ? "7" : "4.5"}
-                  fill={isHovered ? "#FFFFFF" : "#1E293B"}
-                  stroke={isHovered ? "#F97316" : "none"}
-                  strokeWidth={isHovered ? "3.5" : "0"}
-                  className="transition-all duration-300 shadow-md"
+                </div>
+                <div
+                  className={`rounded-full transition-all duration-300 shadow-md ${
+                    isHovered ? 'w-3.5 h-3.5 bg-white border-[3.5px] border-orange-500' : 'w-2.5 h-2.5 bg-slate-800'
+                  }`}
                 />
-              </g>
+              </div>
             );
           })}
-        </svg>
+        </div>
       </div>
 
-      {/* Dynamic X-Axis Labels */}
       <div className="grid grid-cols-4 w-full border-t border-slate-100/70 pt-4 px-2">
         {dataPoints.map((point, index) => (
           <div 
