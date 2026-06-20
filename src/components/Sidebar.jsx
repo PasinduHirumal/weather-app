@@ -1,13 +1,14 @@
 import React from 'react';
-import { Home, Monitor, MapPin, Calendar, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { Home, MapPin, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
+  const location = useLocation();
+
   const menuItems = [
-    { icon: Home, id: 'home', active: true },
-    { icon: Monitor, id: 'monitor' },
-    { icon: MapPin, id: 'location' },
-    { icon: Calendar, id: 'calendar' },
-    { icon: Settings, id: 'settings' },
+    { icon: Home, id: 'home', path: '/' },
+    { icon: MapPin, id: 'location', path: '/location' },
+    { icon: Calendar, id: 'calendar', path: '/calendar' },
   ];
 
   return (
@@ -44,13 +45,20 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <nav className="flex-1 flex flex-col gap-6 w-full items-stretch">
           {menuItems.map((item) => {
             const Icon = item.icon;
+            
+            // Check if the current navlink is active
+            const isActiveLink = 
+              location.pathname === item.path || 
+              (item.path !== '/' && location.pathname.startsWith(item.path));
+
             return (
-              <button
+              <NavLink
                 key={item.id}
+                to={`${item.path}${location.search}`}
                 className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group overflow-hidden ${
-                  item.active
-                    ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/35'
-                    : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50'
+                  isActiveLink
+                    ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-lg shadow-orange-500/35 font-bold'
+                    : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50 font-medium'
                 }`}
               >
                 {/* Icon Wrapper */}
@@ -59,7 +67,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 </div>
 
                 {/* Text Label */}
-                <span className={`capitalize font-bold text-sm tracking-wide transition-all duration-300 whitespace-nowrap ${
+                <span className={`capitalize text-sm tracking-wide transition-all duration-300 whitespace-nowrap ${
                   isOpen ? 'opacity-100 max-w-[120px] ml-2' : 'opacity-0 max-w-0 ml-0'
                 }`}>
                   {item.id}
@@ -71,7 +79,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 }`}>
                   {item.id}
                 </span>
-              </button>
+              </NavLink>
             );
           })}
         </nav>
@@ -80,7 +88,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <div className="w-full flex flex-row items-center justify-end mt-auto h-12 overflow-hidden shrink-0">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-3.5 rounded-2xl text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-all duration-300 shrink-0"
+            className="p-3.5 rounded-2xl text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-all duration-300 shrink-0 cursor-pointer"
           >
             {isOpen ? <ChevronLeft size={20} className="stroke-[2.2]" /> : <ChevronRight size={20} className="stroke-[2.2]" />}
           </button>

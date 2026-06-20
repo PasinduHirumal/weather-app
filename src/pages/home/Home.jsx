@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Sidebar from '../../components/Sidebar';
 import Header from '../../components/Header';
 import WeatherCard from './components/WeatherCard';
 import AirQualityCard from './components/AirQualityCard';
@@ -8,9 +7,8 @@ import TemperatureChartCard from './components/TemperatureChartCard';
 import TomorrowCard from './components/TomorrowCard';
 import RightPanel from './components/RightPanel';
 
-export default function Home() {
+export default function Home({ sidebarOpen, setSidebarOpen }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Initialize location from URL parameters if available, otherwise default to Colombo, Sri Lanka
   const [location, setLocation] = useState(() => {
@@ -191,57 +189,50 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen w-full flex bg-white transition-all duration-300">
-      <div className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen lg:overflow-hidden">
-        
-        {/* Navigation Sidebar */}
-        <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
+    <>
+      {/* Dashboard Core Area */}
+      <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 justify-between overflow-y-auto lg:h-full lg:overflow-y-auto">
+        <div>
+          <Header 
+            onSelectLocation={handleSelectLocation} 
+            location={location} 
+            weather={weatherData}
+            onUseCurrentLocation={handleUseCurrentLocation}
+            onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+          />
 
-        {/* Dashboard Core Area */}
-        <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 justify-between overflow-y-auto lg:h-full lg:overflow-y-auto">
-          <div>
-            <Header 
-              onSelectLocation={handleSelectLocation} 
-              location={location} 
-              weather={weatherData}
-              onUseCurrentLocation={handleUseCurrentLocation}
-              onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-            />
+          {error && (
+            <div className="mb-6 p-4 bg-orange-50 border border-orange-200 text-orange-800 rounded-2xl text-sm font-medium flex items-center justify-between animate-fadeIn">
+              <span>{error}</span>
+              <button onClick={() => fetchWeatherData(location.latitude, location.longitude, location.name, location.country)} className="underline font-bold hover:text-orange-900 ml-2">Retry</button>
+            </div>
+          )}
 
-            {error && (
-              <div className="mb-6 p-4 bg-orange-50 border border-orange-200 text-orange-800 rounded-2xl text-sm font-medium flex items-center justify-between animate-fadeIn">
-                <span>{error}</span>
-                <button onClick={() => fetchWeatherData(location.latitude, location.longitude, location.name, location.country)} className="underline font-bold hover:text-orange-900 ml-2">Retry</button>
+          {/* Dashboard Cards Grid Layout */}
+          <main className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <WeatherCard weather={weatherData} loading={loading} />
+              <AirQualityCard airQuality={airQualityData} weather={weatherData} loading={loading} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <TemperatureChartCard weather={weatherData} loading={loading} />
               </div>
-            )}
-
-            {/* Dashboard Cards Grid Layout */}
-            <main className="grid grid-cols-1 gap-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <WeatherCard weather={weatherData} loading={loading} />
-                <AirQualityCard airQuality={airQualityData} weather={weatherData} loading={loading} />
+              <div className="lg:col-span-1">
+                <TomorrowCard weather={weatherData} location={location} loading={loading} />
               </div>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
-                  <TemperatureChartCard weather={weatherData} loading={loading} />
-                </div>
-                <div className="lg:col-span-1">
-                  <TomorrowCard weather={weatherData} location={location} loading={loading} />
-                </div>
-              </div>
-            </main>
-          </div>
+            </div>
+          </main>
         </div>
-
-        {/* Right Info Panel (Sun Trajectory, UV Index, Predictions) */}
-        <RightPanel 
-          weather={weatherData} 
-          airQuality={airQualityData} 
-          location={location} 
-          loading={loading} 
-        />
-
       </div>
-    </div>
+
+      {/* Right Info Panel (Sun Trajectory, UV Index, Predictions) */}
+      <RightPanel 
+        weather={weatherData} 
+        airQuality={airQualityData} 
+        location={location} 
+        loading={loading} 
+      />
+    </>
   );
 }
