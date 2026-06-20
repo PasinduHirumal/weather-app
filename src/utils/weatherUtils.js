@@ -4,57 +4,57 @@ import { Sun, CloudSun, Cloud, CloudRain, CloudSnow, CloudLightning, CloudDrizzl
 // Reference: WMO weather codes on Open-Meteo
 export function getWeatherInfo(code) {
   if (code === undefined || code === null) {
-    return { text: 'Unknown', icon: Cloud };
+    return { text: 'Unknown', icon: Cloud, condition: 'cloudy' };
   }
 
   switch (code) {
     case 0:
-      return { text: 'Clear Sky', icon: Sun };
+      return { text: 'Clear Sky', icon: Sun, condition: 'sunny' };
     case 1:
-      return { text: 'Mainly Clear', icon: CloudSun };
+      return { text: 'Mainly Clear', icon: CloudSun, condition: 'sunny' };
     case 2:
-      return { text: 'Partly Cloudy', icon: CloudSun };
+      return { text: 'Partly Cloudy', icon: CloudSun, condition: 'cloudy' };
     case 3:
-      return { text: 'Overcast', icon: Cloud };
+      return { text: 'Overcast', icon: Cloud, condition: 'cloudy' };
     case 45:
     case 48:
-      return { text: 'Foggy', icon: Cloud };
+      return { text: 'Foggy', icon: Cloud, condition: 'foggy' };
     case 51:
     case 53:
     case 55:
-      return { text: 'Drizzle', icon: CloudDrizzle };
+      return { text: 'Drizzle', icon: CloudDrizzle, condition: 'rainy' };
     case 56:
     case 57:
-      return { text: 'Freezing Drizzle', icon: CloudSnow };
+      return { text: 'Freezing Drizzle', icon: CloudSnow, condition: 'snowy' };
     case 61:
-      return { text: 'Slight Rain', icon: CloudRain };
+      return { text: 'Slight Rain', icon: CloudRain, condition: 'rainy' };
     case 63:
-      return { text: 'Moderate Rain', icon: CloudRain };
+      return { text: 'Moderate Rain', icon: CloudRain, condition: 'rainy' };
     case 65:
-      return { text: 'Heavy Rain', icon: CloudRain };
+      return { text: 'Heavy Rain', icon: CloudRain, condition: 'rainy' };
     case 66:
     case 67:
-      return { text: 'Freezing Rain', icon: CloudRain };
+      return { text: 'Freezing Rain', icon: CloudRain, condition: 'rainy' };
     case 71:
     case 73:
     case 75:
-      return { text: 'Snow Fall', icon: CloudSnow };
+      return { text: 'Snow Fall', icon: CloudSnow, condition: 'snowy' };
     case 77:
-      return { text: 'Snow Grains', icon: CloudSnow };
+      return { text: 'Snow Grains', icon: CloudSnow, condition: 'snowy' };
     case 80:
     case 81:
     case 82:
-      return { text: 'Rain Showers', icon: CloudRain };
+      return { text: 'Rain Showers', icon: CloudRain, condition: 'rainy' };
     case 85:
     case 86:
-      return { text: 'Snow Showers', icon: CloudSnow };
+      return { text: 'Snow Showers', icon: CloudSnow, condition: 'snowy' };
     case 95:
-      return { text: 'Thunderstorm', icon: CloudLightning };
+      return { text: 'Thunderstorm', icon: CloudLightning, condition: 'thunderstorm' };
     case 96:
     case 99:
-      return { text: 'Thunderstorm with Hail', icon: CloudLightning };
+      return { text: 'Thunderstorm with Hail', icon: CloudLightning, condition: 'thunderstorm' };
     default:
-      return { text: 'Cloudy', icon: Cloud };
+      return { text: 'Cloudy', icon: Cloud, condition: 'cloudy' };
   }
 }
 

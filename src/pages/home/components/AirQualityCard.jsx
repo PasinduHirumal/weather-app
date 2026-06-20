@@ -31,13 +31,10 @@ export default function AirQualityCard({ airQuality, weather, loading }) {
 
   return (
     <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col h-[320px] justify-between relative overflow-hidden group hover:shadow-md transition-all duration-300">
-      {/* Background illustration */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-90 mix-blend-multiply group-hover:scale-105 transition-transform duration-[600ms] pointer-events-none" 
         style={{ backgroundImage: `url(${airQualityBg})` }}
       >
-        {/* Gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-black/5"></div>
       </div>
 
       {/* Top Details (Foreground) */}

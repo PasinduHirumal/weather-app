@@ -1,6 +1,14 @@
 import React from 'react';
-import weatherBg from '../../../assets/weather_bg.png';
 import { getWeatherInfo } from '../../../utils/weatherUtils';
+import useImageColors from '../../../utils/useImageColors';
+
+// Import weather assets
+import bgSunny from '../../../assets/weather/weather_sunny.png';
+import bgCloudy from '../../../assets/weather/weather_cloudy.png';
+import bgRainy from '../../../assets/weather/weather_rainy.png';
+import bgSnowy from '../../../assets/weather/weather_snowy.png';
+import bgThunderstorm from '../../../assets/weather/weather_thunderstorm.png';
+import bgFoggy from '../../../assets/weather/weather_foggy.png';
 
 export default function WeatherCard({ weather, loading }) {
   if (loading || !weather) {
@@ -27,42 +35,68 @@ export default function WeatherCard({ weather, loading }) {
   const currentTemp = Math.round(weather.current.temperature_2m);
   const minTemp = Math.round(weather.daily.temperature_2m_min[0]);
   const weatherCode = weather.current.weather_code;
-  const { text: weatherDesc, icon: WeatherIcon } = getWeatherInfo(weatherCode);
+  const { text: weatherDesc, icon: WeatherIcon, condition } = getWeatherInfo(weatherCode);
+
+  const bgImages = {
+    sunny: bgSunny,
+    cloudy: bgCloudy,
+    rainy: bgRainy,
+    snowy: bgSnowy,
+    thunderstorm: bgThunderstorm,
+    foggy: bgFoggy,
+  };
+  const currentBg = bgImages[condition] || bgCloudy;
+  const colors = useImageColors(currentBg);
+
+  let iconAnimClass = '';
+  if (condition === 'sunny') {
+    iconAnimClass = 'animate-weather-spin';
+  } else if (condition === 'cloudy' || condition === 'foggy') {
+    iconAnimClass = 'animate-weather-bounce';
+  } else {
+    iconAnimClass = 'animate-weather-pulse';
+  }
 
   const pressure = Math.round(weather.current.surface_pressure);
-  const visibilityVal = weather.current.visibility; 
+  const visibilityVal = weather.current.visibility;
   // Convert meters to km
   const visibility = visibilityVal ? (visibilityVal / 1000).toFixed(1) : 'N/A';
   const humidity = weather.current.relative_humidity_2m;
 
   return (
-    <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col h-[320px] justify-between relative overflow-hidden group hover:shadow-md transition-all duration-300">
+    <div
+      className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border flex flex-col h-[320px] justify-between relative overflow-hidden group hover:shadow-md transition-all duration-300"
+      style={{ borderColor: colors.borderColor }}
+    >
       {/* Background illustration */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-90 mix-blend-multiply group-hover:scale-105 transition-transform duration-[600ms] pointer-events-none" 
-        style={{ backgroundImage: `url(${weatherBg})` }}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-90 mix-blend-multiply group-hover:scale-105 transition-transform duration-[600ms] pointer-events-none"
+        style={{ backgroundImage: `url(${currentBg})` }}
       >
-        {/* Gradients to keep text readable */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-black/5"></div>
       </div>
 
       {/* Top Details (Foreground) */}
-      <div className="relative z-10 flex flex-col gap-1 text-slate-800">
+      <div className="relative z-10 flex flex-col gap-1" style={{ color: colors.primaryText }}>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-bold flex items-center gap-2">
-              <WeatherIcon className="text-orange-500 stroke-[2.2]" size={20} />
+            <h3 className="text-lg font-bold flex items-center gap-2" style={{ color: colors.primaryText }}>
+              <WeatherIcon className={`stroke-[2.2] ${iconAnimClass}`} size={20} style={{ color: colors.accentColor }} />
               Weather
             </h3>
-            <p className="text-xs text-slate-500 font-semibold mt-0.5">What's the weather.</p>
+            <p className="text-xs font-semibold mt-0.5" style={{ color: colors.secondaryText }}>What's the weather.</p>
           </div>
         </div>
 
         <div className="mt-5 flex items-baseline gap-2">
-          <span className="text-5xl font-extrabold tracking-tight">{currentTemp}°C</span>
-          <span className="text-xs font-bold text-slate-600 bg-white/80 px-2 py-0.5 rounded-full shadow-sm border border-slate-100">{minTemp}°C</span>
+          <span className="text-5xl font-extrabold tracking-tight" style={{ color: colors.primaryText }}>{currentTemp}°C</span>
+          <span
+            className="text-xs font-bold px-2 py-0.5 rounded-full shadow-sm border"
+            style={{ backgroundColor: colors.badgeBg, color: colors.badgeText, borderColor: colors.borderColor }}
+          >
+            {minTemp}°C
+          </span>
         </div>
-        <p className="text-sm font-bold text-slate-700 mt-1">{weatherDesc}</p>
+        <p className="text-sm font-bold mt-1" style={{ color: colors.secondaryText }}>{weatherDesc}</p>
       </div>
 
       {/* Bottom Metrics Details (Foreground) */}
@@ -77,9 +111,12 @@ export default function WeatherCard({ weather, loading }) {
           <span className="text-xs sm:text-sm font-extrabold mt-1">{visibility} km</span>
         </div>
 
-        <div className="bg-white text-slate-800 border border-slate-100 rounded-2xl p-2 sm:p-3 flex flex-col items-center justify-center shadow-sm">
-          <span className="text-[9px] sm:text-[10px] text-slate-400 font-bold uppercase tracking-wider">Humidity</span>
-          <span className="text-xs sm:text-sm font-extrabold mt-1">{humidity}%</span>
+        <div
+          className="border rounded-2xl p-2 sm:p-3 flex flex-col items-center justify-center shadow-sm"
+          style={{ backgroundColor: colors.badgeBg, borderColor: colors.borderColor }}
+        >
+          <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider" style={{ color: colors.secondaryText }}>Humidity</span>
+          <span className="text-xs sm:text-sm font-extrabold mt-1" style={{ color: colors.primaryText }}>{humidity}%</span>
         </div>
       </div>
     </div>

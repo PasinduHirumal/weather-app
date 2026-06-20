@@ -54,3 +54,31 @@ html, body {
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
+
+/* Weather Icon Animations */
+@keyframes weather-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes weather-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes weather-pulse-light {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-weather-spin {
+  animation: weather-spin 20s linear infinite;
+}
+
+.animate-weather-bounce {
+  animation: weather-bounce 4s ease-in-out infinite;
+}
+
+.animate-weather-pulse {
+  animation: weather-pulse-light 3s ease-in-out infinite;
+}
