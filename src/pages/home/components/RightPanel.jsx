@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sun, Calendar, Navigation } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { getWeatherInfo, getUviCategory, formatTime, formatDate } from '../../../utils/weatherUtils';
 
 export default function RightPanel({ weather, airQuality, location, loading }) {
@@ -93,7 +94,12 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
     : location.name;
 
   return (
-    <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8 lg:h-full lg:overflow-y-auto">
+    <motion.div 
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ type: 'spring', stiffness: 90, damping: 15 }}
+      className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-slate-100/70 justify-between gap-8 lg:h-full lg:overflow-y-auto"
+    >
       
       {/* Sun & Location Temperature section */}
       <div className="flex flex-col gap-4">
@@ -219,6 +225,6 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
         </div>
       </div>
 
-    </div>
+    </motion.div>
   );
 }

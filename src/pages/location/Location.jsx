@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { MapPin, Wind, Droplets, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { getWeatherInfo } from '../../utils/weatherUtils';
 
 const DEFAULT_CITIES = [
@@ -11,6 +12,29 @@ const DEFAULT_CITIES = [
   { name: 'Tokyo', country: 'Japan', lat: 35.6762, lon: 139.6503 },
   { name: 'Sydney', country: 'Australia', lat: -33.8688, lon: 151.2093 }
 ];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 90,
+      damping: 14
+    }
+  }
+};
 
 export default function Location() {
   const navigate = useNavigate();
@@ -75,51 +99,57 @@ export default function Location() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {cityData.map((city, idx) => {
             const { text: desc, icon: Icon } = getWeatherInfo(city.weatherCode);
             return (
-              <div
-                key={idx}
-                onClick={() => handleJumpToCity(city)}
-                className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-44 hover:shadow-md hover:border-slate-200 transition-all duration-300 group cursor-pointer"
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <h4 className="text-slate-800 text-lg font-black truncate max-w-[150px]">{city.name}</h4>
-                    <span className="text-slate-400 text-xs font-bold block mt-0.5">{city.country}</span>
-                  </div>
-                  <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-orange-50 text-orange-500 group-hover:scale-110 transition-transform">
-                    <Icon className="stroke-[2.2]" size={20} />
-                  </div>
-                </div>
-
-                <div className="flex items-end justify-between mt-4">
-                  <div>
-                    <span className="text-3xl font-extrabold text-slate-850 tracking-tight">{city.temp}°C</span>
-                    <p className="text-xs text-slate-500 font-bold mt-0.5 leading-none">{desc}</p>
-                  </div>
-
-                  <div className="flex flex-col gap-1 text-[10px] text-slate-400 font-bold text-right">
-                    <div className="flex items-center gap-1 justify-end">
-                      <Droplets size={10} className="text-blue-400" />
-                      <span>{city.humidity}%</span>
+              <motion.div key={idx} variants={itemVariants}>
+                <div
+                  onClick={() => handleJumpToCity(city)}
+                  className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-44 hover:shadow-md hover:border-slate-200 transition-all duration-300 group cursor-pointer"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h4 className="text-slate-800 text-lg font-black truncate max-w-[150px]">{city.name}</h4>
+                      <span className="text-slate-400 text-xs font-bold block mt-0.5">{city.country}</span>
                     </div>
-                    <div className="flex items-center gap-1 justify-end">
-                      <Wind size={10} className="text-slate-400" />
-                      <span>{city.windSpeed} km/h</span>
+                    <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-orange-50 text-orange-500 group-hover:scale-110 transition-transform">
+                      <Icon className="stroke-[2.2]" size={20} />
                     </div>
                   </div>
-                </div>
 
-                <div className="border-t border-slate-50 pt-2.5 mt-2 flex items-center justify-between text-xs font-bold text-orange-500 group-hover:text-orange-600 transition-colors">
-                  <span>View Weather details</span>
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-end justify-between mt-4">
+                    <div>
+                      <span className="text-3xl font-extrabold text-slate-850 tracking-tight">{city.temp}°C</span>
+                      <p className="text-xs text-slate-500 font-bold mt-0.5 leading-none">{desc}</p>
+                    </div>
+
+                    <div className="flex flex-col gap-1 text-[10px] text-slate-400 font-bold text-right">
+                      <div className="flex items-center gap-1 justify-end">
+                        <Droplets size={10} className="text-blue-400" />
+                        <span>{city.humidity}%</span>
+                      </div>
+                      <div className="flex items-center gap-1 justify-end">
+                        <Wind size={10} className="text-slate-400" />
+                        <span>{city.windSpeed} km/h</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-50 pt-2.5 mt-2 flex items-center justify-between text-xs font-bold text-orange-500 group-hover:text-orange-600 transition-colors">
+                    <span>View Weather details</span>
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       )}
     </div>
   );
