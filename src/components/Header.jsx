@@ -55,9 +55,7 @@ export default function Header({ onSelectLocation, location, onUseCurrentLocatio
         {/* Hamburger Menu Button */}
         <button
           onClick={onToggleSidebar}
-          className={`p-2.5 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 ${
-            sidebarOpen ? 'lg:hidden' : 'flex'
-          }`}
+          className="p-2.5 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 flex lg:hidden"
           title="Toggle Sidebar"
         >
           <Menu size={18} className="stroke-[2.2] text-orange-500" />
