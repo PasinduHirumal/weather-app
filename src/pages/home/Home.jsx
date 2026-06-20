@@ -114,7 +114,6 @@ export default function Home() {
         async (position) => {
           const { latitude, longitude } = position.coords;
           try {
-            // Reverse geocode to get a readable name
             const revGeoUrl = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`;
             const res = await fetch(revGeoUrl, {
               headers: { 'User-Agent': 'NgijihWeatherApp/1.0' }
@@ -161,7 +160,6 @@ export default function Home() {
         },
         (err) => {
           console.warn('Geolocation access denied/failed:', err);
-          // If browser location fails, stick to current location (or default Colombo)
           if (!weatherData) {
             setLocation({
               name: 'Colombo',
@@ -194,7 +192,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen w-full flex bg-white transition-all duration-300">
-      {/* Main Full-Screen Layout Wrapper */}
       <div className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen lg:overflow-hidden">
         
         {/* Navigation Sidebar */}
@@ -203,10 +200,10 @@ export default function Home() {
         {/* Dashboard Core Area */}
         <div className="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 justify-between overflow-y-auto lg:h-full lg:overflow-y-auto">
           <div>
-            {/* Header Greeting and Search */}
             <Header 
               onSelectLocation={handleSelectLocation} 
               location={location} 
+              weather={weatherData}
               onUseCurrentLocation={handleUseCurrentLocation}
               onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
             />
@@ -220,13 +217,10 @@ export default function Home() {
 
             {/* Dashboard Cards Grid Layout */}
             <main className="grid grid-cols-1 gap-6">
-              {/* Row 1: Weather Info & Air Quality */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <WeatherCard weather={weatherData} loading={loading} />
                 <AirQualityCard airQuality={airQualityData} weather={weatherData} loading={loading} />
               </div>
-
-              {/* Row 2: Temperature Curve Chart & Tomorrow Forecast Card */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2">
                   <TemperatureChartCard weather={weatherData} loading={loading} />

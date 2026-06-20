@@ -1,11 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, MapPin, Navigation, Menu } from 'lucide-react';
-import avatarImg from '../assets/avatar.png';
+import { Search, Bell, MapPin, Navigation, Menu, Clock } from 'lucide-react';
 
-export default function Header({ onSelectLocation, location, onUseCurrentLocation, onToggleSidebar, sidebarOpen }) {
+export default function Header({ onSelectLocation, location, weather, onUseCurrentLocation, onToggleSidebar, sidebarOpen }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [localTime, setLocalTime] = useState('');
+
+  // Ticking local clock based on selected location's timezone offset
+  useEffect(() => {
+    if (!weather || typeof weather.utc_offset_seconds === 'undefined') {
+      setLocalTime('');
+      return;
+    }
+
+    const updateClock = () => {
+      const utcDate = new Date();
+      const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
+      const targetTime = new Date(utcTime + (weather.utc_offset_seconds * 1000));
+
+      const timeStr = targetTime.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+      });
+      setLocalTime(timeStr);
+    };
+
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, [weather]);
 
   // Debounced geocoding search
   useEffect(() => {
@@ -52,7 +77,6 @@ export default function Header({ onSelectLocation, location, onUseCurrentLocatio
     <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full mb-8">
       {/* Profile Greeting Section */}
       <div className="flex items-center gap-4">
-        {/* Hamburger Menu Button */}
         <button
           onClick={onToggleSidebar}
           className="p-2.5 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 flex lg:hidden"
@@ -61,14 +85,18 @@ export default function Header({ onSelectLocation, location, onUseCurrentLocatio
           <Menu size={18} className="stroke-[2.2] text-orange-500" />
         </button>
 
-        <img
-          src={avatarImg}
-          alt="Jack Grealish"
-          className="w-12 h-12 rounded-full object-cover border border-slate-100 shadow-sm"
-        />
         <div>
-          <span className="text-slate-400 text-xs font-semibold block uppercase tracking-wider">Hello,</span>
-          <h2 className="text-slate-800 text-xl font-bold leading-tight">Jack Grealish</h2>
+          <h2 className="text-slate-800 text-lg sm:text-xl font-extrabold leading-tight tracking-tight">
+            {location.name}{location.country ? `, ${location.country}` : ''}
+          </h2>
+          {localTime && weather && (
+            <span className="text-slate-500 text-xs font-semibold mt-1 flex items-center gap-1.5 leading-none">
+              <Clock size={12} className="text-orange-500 stroke-[2.2] shrink-0" />
+              <span>
+                {localTime} <span className="text-slate-400 font-medium">({weather.timezone_abbreviation || ''} • {weather.timezone})</span>
+              </span>
+            </span>
+          )}
         </div>
       </div>
 
@@ -134,7 +162,7 @@ export default function Header({ onSelectLocation, location, onUseCurrentLocatio
           )}
         </div>
 
-        <button 
+        <button
           onClick={onUseCurrentLocation}
           title="Use my current location"
           className="relative p-2.5 rounded-full border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 group"
