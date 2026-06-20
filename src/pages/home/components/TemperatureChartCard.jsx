@@ -1,10 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Thermometer, CloudRain, Wind, Sun, Cloud, CloudSun } from 'lucide-react';
 import { getWeatherInfo } from '../../../utils/weatherUtils';
 
+// Helper to determine the current time slot index based on target timezone offset
+const getCurrentTimeSlotIndex = (utcOffset) => {
+  if (typeof utcOffset === 'undefined') return 1; // Default to Afternoon
+  const utcDate = new Date();
+  const utcTime = utcDate.getTime() + utcDate.getTimezoneOffset() * 60000;
+  const targetTime = new Date(utcTime + (utcOffset * 1000));
+  const hour = targetTime.getHours();
+  
+  if (hour >= 5 && hour < 12) return 0; // Morning (5:00 AM - 11:59 AM)
+  if (hour >= 12 && hour < 17) return 1; // Afternoon (12:00 PM - 4:59 PM)
+  if (hour >= 17 && hour < 21) return 2; // Evening (5:00 PM - 8:59 PM)
+  return 3; // Night (9:00 PM - 4:59 AM)
+};
+
 export default function TemperatureChartCard({ weather, loading }) {
   const [activeTab, setActiveTab] = useState('temp');
-  const [hoveredIndex, setHoveredIndex] = useState(1);
+  
+  const [hoveredIndex, setHoveredIndex] = useState(() => {
+    return weather?.utc_offset_seconds !== undefined
+      ? getCurrentTimeSlotIndex(weather.utc_offset_seconds)
+      : 1;
+  });
+
+  const lastWeatherTimeRef = useRef(weather?.current?.time);
+  const lastActiveIndexRef = useRef(1);
+
+  // Sync state if props change (React render-phase adjustments)
+  if (weather?.current?.time !== lastWeatherTimeRef.current) {
+    lastWeatherTimeRef.current = weather?.current?.time;
+    const initialIndex = weather?.utc_offset_seconds !== undefined
+      ? getCurrentTimeSlotIndex(weather.utc_offset_seconds)
+      : 1;
+    lastActiveIndexRef.current = initialIndex;
+    setHoveredIndex(initialIndex);
+  }
+
+  // Ticking check to update current time slot immediately in real-time
+  useEffect(() => {
+    if (!weather || typeof weather.utc_offset_seconds === 'undefined') return;
+
+    const updateActiveSlot = () => {
+      const activeIdx = getCurrentTimeSlotIndex(weather.utc_offset_seconds);
+      if (activeIdx !== lastActiveIndexRef.current) {
+        lastActiveIndexRef.current = activeIdx;
+        setHoveredIndex(activeIdx);
+      }
+    };
+
+    updateActiveSlot();
+    const interval = setInterval(updateActiveSlot, 10000); // Check every 10 seconds
+    return () => clearInterval(interval);
+  }, [weather?.utc_offset_seconds]);
 
   if (loading || !weather) {
     return (
@@ -89,7 +138,16 @@ export default function TemperatureChartCard({ weather, loading }) {
   });
 
   return (
-    <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] group hover:shadow-md transition-all duration-300">
+    <div 
+      className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] group hover:shadow-md transition-all duration-300"
+      onMouseLeave={() => {
+        const currentSlot = weather?.utc_offset_seconds !== undefined
+          ? getCurrentTimeSlotIndex(weather.utc_offset_seconds)
+          : 1;
+        setHoveredIndex(currentSlot);
+        lastActiveIndexRef.current = currentSlot;
+      }}
+    >
       {/* Header and Filter Tabs */}
       <div className="flex items-center justify-between">
         <h3 className="text-xl font-extrabold text-slate-800 tracking-tight max-w-[200px] sm:max-w-none">
@@ -101,7 +159,11 @@ export default function TemperatureChartCard({ weather, loading }) {
           <button
             onClick={() => {
               setActiveTab('temp');
-              setHoveredIndex(1);
+              const currentSlot = weather?.utc_offset_seconds !== undefined
+                ? getCurrentTimeSlotIndex(weather.utc_offset_seconds)
+                : 1;
+              setHoveredIndex(currentSlot);
+              lastActiveIndexRef.current = currentSlot;
             }}
             title="Temperature"
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
@@ -116,7 +178,11 @@ export default function TemperatureChartCard({ weather, loading }) {
           <button
             onClick={() => {
               setActiveTab('rain');
-              setHoveredIndex(1);
+              const currentSlot = weather?.utc_offset_seconds !== undefined
+                ? getCurrentTimeSlotIndex(weather.utc_offset_seconds)
+                : 1;
+              setHoveredIndex(currentSlot);
+              lastActiveIndexRef.current = currentSlot;
             }}
             title="Rain Probability"
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
@@ -131,7 +197,11 @@ export default function TemperatureChartCard({ weather, loading }) {
           <button
             onClick={() => {
               setActiveTab('wind');
-              setHoveredIndex(1);
+              const currentSlot = weather?.utc_offset_seconds !== undefined
+                ? getCurrentTimeSlotIndex(weather.utc_offset_seconds)
+                : 1;
+              setHoveredIndex(currentSlot);
+              lastActiveIndexRef.current = currentSlot;
             }}
             title="Wind Speed"
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
