@@ -24,7 +24,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           }`}
       />
 
-      <aside className={`bg-white h-full flex flex-col py-5 border-r border-slate-100 transition-all duration-300 
+      <aside className={`bg-white dark:bg-slate-950 h-full flex flex-col py-5 border-r border-slate-100 dark:border-slate-900 transition-all duration-300 
         fixed lg:relative inset-y-0 left-0 z-50 lg:z-30 px-4 items-stretch
         ${isOpen ? 'translate-x-0 w-52' : '-translate-x-full lg:translate-x-0 lg:w-20'}`}
       >
@@ -37,7 +37,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               className="w-10 h-10 object-contain rounded-full shadow-md shadow-orange-500/10"
             />
           </div>
-          <span className={`font-extrabold tracking-widest text-slate-800 uppercase transition-all duration-300 whitespace-nowrap text-xs ${isOpen ? 'opacity-100 max-w-[120px] ml-3' : 'opacity-0 max-w-0 ml-0'
+          <span className={`font-extrabold tracking-widest text-slate-800 dark:text-slate-100 uppercase transition-all duration-300 whitespace-nowrap text-xs ${isOpen ? 'opacity-100 max-w-[120px] ml-3' : 'opacity-0 max-w-0 ml-0'
             }`}>
             MinuteCast
           </span>
@@ -64,7 +64,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 }}
                 className={`relative flex flex-row items-center h-12 rounded-2xl transition-all duration-300 group ${isActiveLink
                   ? 'text-white font-bold'
-                  : 'text-slate-400 hover:text-slate-800 hover:bg-slate-50/60 font-medium'
+                  : 'text-slate-400 dark:text-slate-550 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-50/60 dark:hover:bg-slate-900/60 font-medium'
                   }`}
               >
                 {isActiveLink && (
@@ -100,7 +100,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <div className="w-full flex flex-row items-center justify-end mt-auto h-12 overflow-hidden shrink-0">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-3.5 rounded-2xl text-slate-400 hover:text-slate-800 hover:bg-slate-50 transition-all duration-300 shrink-0 cursor-pointer"
+            className="p-3.5 rounded-2xl text-slate-400 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all duration-300 shrink-0 cursor-pointer"
           >
             {isOpen ? <ChevronLeft size={20} className="stroke-[2.2]" /> : <ChevronRight size={20} className="stroke-[2.2]" />}
           </button>

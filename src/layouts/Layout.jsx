@@ -168,7 +168,7 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen w-full flex bg-white transition-all duration-300">
+    <div className="min-h-screen w-full flex bg-white dark:bg-slate-950 transition-all duration-300">
       <div className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen lg:overflow-hidden">
         <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
         <div className="flex-1 flex flex-col justify-between lg:overflow-y-auto lg:h-full">
@@ -210,7 +210,7 @@ export default function Layout() {
               exit={isLargeScreen ? { width: 0, opacity: 0 } : { height: 0, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 100, damping: 20 }}
               style={{ overflow: 'hidden' }}
-              className="w-full lg:w-auto flex-shrink-0 lg:h-full border-t lg:border-t-0 lg:border-l border-slate-100/70"
+              className="w-full lg:w-auto flex-shrink-0 lg:h-full border-t lg:border-t-0 lg:border-l border-slate-100/70 dark:border-slate-900"
             >
               <div className="w-full lg:w-[350px] h-full">
                 <RightPanel

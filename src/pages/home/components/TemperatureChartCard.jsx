@@ -57,17 +57,17 @@ export default function TemperatureChartCard({ weather, loading }) {
 
   if (loading || !weather) {
     return (
-      <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] animate-pulse">
+      <div className="bg-white dark:bg-slate-900 rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 dark:border-slate-800/80 flex flex-col justify-between h-[360px] animate-pulse">
         <div className="flex items-center justify-between">
-          <div className="h-6 w-52 bg-slate-200 rounded-lg"></div>
-          <div className="h-8 w-24 bg-slate-200 rounded-xl"></div>
+          <div className="h-6 w-52 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
+          <div className="h-8 w-24 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
         </div>
-        <div className="h-40 bg-slate-50 rounded-2xl my-4"></div>
+        <div className="h-40 bg-slate-50 dark:bg-slate-800/40 rounded-2xl my-4"></div>
         <div className="grid grid-cols-4 gap-4 mt-auto">
-          <div className="h-10 bg-slate-100 rounded-xl"></div>
-          <div className="h-10 bg-slate-100 rounded-xl"></div>
-          <div className="h-10 bg-slate-100 rounded-xl"></div>
-          <div className="h-10 bg-slate-100 rounded-xl"></div>
+          <div className="h-10 bg-slate-100 dark:bg-slate-800/60 rounded-xl"></div>
+          <div className="h-10 bg-slate-100 dark:bg-slate-800/60 rounded-xl"></div>
+          <div className="h-10 bg-slate-100 dark:bg-slate-800/60 rounded-xl"></div>
+          <div className="h-10 bg-slate-100 dark:bg-slate-800/60 rounded-xl"></div>
         </div>
       </div>
     );
@@ -139,7 +139,7 @@ export default function TemperatureChartCard({ weather, loading }) {
 
   return (
     <div 
-      className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col justify-between h-[360px] group hover:shadow-md transition-all duration-300"
+      className="bg-white dark:bg-slate-900 rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 dark:border-slate-800/80 flex flex-col justify-between h-[360px] group hover:shadow-md transition-all duration-300"
       onMouseLeave={() => {
         const currentSlot = weather?.utc_offset_seconds !== undefined
           ? getCurrentTimeSlotIndex(weather.utc_offset_seconds)
@@ -150,12 +150,12 @@ export default function TemperatureChartCard({ weather, loading }) {
     >
       {/* Header and Filter Tabs */}
       <div className="flex items-center justify-between">
-        <h3 className="text-xl font-extrabold text-slate-800 tracking-tight max-w-[200px] sm:max-w-none">
+        <h3 className="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight max-w-[200px] sm:max-w-none">
           How's the weather today?
         </h3>
         
         {/* Toggle tabs */}
-        <div className="flex items-center bg-slate-50 border border-slate-100 p-1.5 rounded-2xl gap-1">
+        <div className="flex items-center bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 p-1.5 rounded-2xl gap-1">
           <button
             onClick={() => {
               setActiveTab('temp');
@@ -169,7 +169,7 @@ export default function TemperatureChartCard({ weather, loading }) {
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
               activeTab === 'temp'
                 ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                : 'text-slate-400 hover:text-slate-700'
+                : 'text-slate-400 dark:text-slate-550 hover:text-slate-700 dark:hover:text-slate-350'
             }`}
           >
             <Thermometer size={16} className="stroke-[2.5]" />
@@ -188,7 +188,7 @@ export default function TemperatureChartCard({ weather, loading }) {
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
               activeTab === 'rain'
                 ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                : 'text-slate-400 hover:text-slate-700'
+                : 'text-slate-400 dark:text-slate-550 hover:text-slate-700 dark:hover:text-slate-350'
             }`}
           >
             <CloudRain size={16} className="stroke-[2.5]" />
@@ -207,7 +207,7 @@ export default function TemperatureChartCard({ weather, loading }) {
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
               activeTab === 'wind'
                 ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                : 'text-slate-400 hover:text-slate-700'
+                : 'text-slate-400 dark:text-slate-550 hover:text-slate-700 dark:hover:text-slate-350'
             }`}
           >
             <Wind size={16} className="stroke-[2.5]" />
@@ -260,7 +260,7 @@ export default function TemperatureChartCard({ weather, loading }) {
 
           {hoveredIndex !== null && dataPoints[hoveredIndex] && (
             <div
-              className="absolute border-l border-dashed border-slate-200 pointer-events-none animate-pulse"
+              className="absolute border-l border-dashed border-slate-200 dark:border-slate-700 pointer-events-none animate-pulse"
               style={{
                 left: `${dataPoints[hoveredIndex].x}%`,
                 top: `${dataPoints[hoveredIndex].y}%`,
@@ -289,15 +289,15 @@ export default function TemperatureChartCard({ weather, loading }) {
                 {/* Larger hover trigger target */}
                 <div className="absolute w-12 h-12 -translate-x-1/2 -translate-y-1/2 rounded-full cursor-pointer z-20" />
                 <div className="absolute -translate-y-11 -translate-x-1/2 z-10 pointer-events-none">
-                  <div className={`flex items-center justify-center w-7 h-7 rounded-full bg-white shadow-sm border border-slate-100 transition-all duration-300 ${
+                  <div className={`flex items-center justify-center w-7 h-7 rounded-full bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-slate-800 transition-all duration-300 ${
                     isHovered ? 'scale-110 border-orange-200' : 'opacity-85'
                   }`}>
-                    <IconComponent className={`stroke-[2.2] ${isHovered ? 'text-orange-500' : 'text-slate-400'}`} size={14} />
+                    <IconComponent className={`stroke-[2.2] ${isHovered ? 'text-orange-500' : 'text-slate-400 dark:text-slate-500'}`} size={14} />
                   </div>
                 </div>
                 <div
                   className={`rounded-full transition-all duration-300 shadow-md ${
-                    isHovered ? 'w-3.5 h-3.5 bg-white border-[3.5px] border-orange-500' : 'w-2.5 h-2.5 bg-slate-800'
+                    isHovered ? 'w-3.5 h-3.5 bg-white dark:bg-slate-900 border-[3.5px] border-orange-500' : 'w-2.5 h-2.5 bg-slate-800 dark:bg-slate-200'
                   }`}
                 />
               </div>
@@ -306,17 +306,17 @@ export default function TemperatureChartCard({ weather, loading }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 w-full border-t border-slate-100/70 pt-4 px-2">
+      <div className="grid grid-cols-4 w-full border-t border-slate-100/70 dark:border-slate-800/60 pt-4 px-2">
         {dataPoints.map((point, index) => (
           <div 
             key={index} 
             className="flex flex-col items-center cursor-pointer"
             onMouseEnter={() => setHoveredIndex(index)}
           >
-            <span className={`text-base font-extrabold transition-all duration-200 ${hoveredIndex === index ? 'text-slate-800 scale-105' : 'text-slate-500'}`}>
+            <span className={`text-base font-extrabold transition-all duration-200 ${hoveredIndex === index ? 'text-slate-800 dark:text-slate-100 scale-105' : 'text-slate-500 dark:text-slate-400'}`}>
               {point.display}
             </span>
-            <span className="text-[11px] text-slate-400 font-bold mt-1 uppercase tracking-wider">
+            <span className="text-[11px] text-slate-400 dark:text-slate-550 font-bold mt-1 uppercase tracking-wider">
               {point.label}
             </span>
           </div>

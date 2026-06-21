@@ -45,7 +45,7 @@ export default function Calendar() {
       {/* Page Section Title */}
       <div className="flex items-center gap-2 mb-6 mt-2">
         <CalendarIcon className="text-orange-500 stroke-[2.2]" size={20} />
-        <h3 className="text-slate-800 text-sm font-extrabold tracking-tight uppercase">
+        <h3 className="text-slate-800 dark:text-slate-100 text-sm font-extrabold tracking-tight uppercase">
           7-Day Calendar Forecast
         </h3>
       </div>
@@ -59,7 +59,7 @@ export default function Calendar() {
       {loading || !weather ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {[...Array(7)].map((_, idx) => (
-            <div key={idx} className="h-64 bg-slate-50 border border-slate-100 rounded-[28px] animate-pulse"></div>
+            <div key={idx} className="h-64 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[28px] animate-pulse"></div>
           ))}
         </div>
       ) : (
@@ -82,18 +82,18 @@ export default function Calendar() {
             return (
               <motion.div key={idx} variants={itemVariants}>
                 <div
-                  className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-72 hover:shadow-md hover:border-slate-200 transition-all duration-300 group"
+                  className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-72 hover:shadow-md hover:border-slate-200 dark:hover:border-slate-700 transition-all duration-300 group"
                 >
                   {/* Day Info */}
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold block uppercase tracking-wider">
                         {getFormattedDateLabel(dayTime)}
                       </span>
-                      <h4 className="text-slate-800 text-base font-extrabold mt-0.5">{getDayName(dayTime)}</h4>
+                      <h4 className="text-slate-800 dark:text-slate-100 text-base font-extrabold mt-0.5">{getDayName(dayTime)}</h4>
                     </div>
 
-                    <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-orange-50 text-orange-500">
+                    <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-orange-50 dark:bg-slate-800 text-orange-500 dark:text-orange-400">
                       <IconComponent className="stroke-[2.2]" size={20} />
                     </div>
                   </div>
@@ -101,14 +101,14 @@ export default function Calendar() {
                   {/* Temp and Description */}
                   <div className="my-3">
                     <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-black text-slate-800 tracking-tight">{maxT}°C</span>
-                      <span className="text-slate-400 text-xs font-bold">/ {minT}°C</span>
+                      <span className="text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">{maxT}°C</span>
+                      <span className="text-slate-400 dark:text-slate-500 text-xs font-bold">/ {minT}°C</span>
                     </div>
-                    <p className="text-xs text-slate-500 font-bold mt-0.5">{desc}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-bold mt-0.5">{desc}</p>
                   </div>
 
                   {/* UV Index metrics */}
-                  <div className="bg-slate-50/80 rounded-xl p-2.5 flex items-center justify-between text-[11px] font-bold text-slate-600">
+                  <div className="bg-slate-50/80 dark:bg-slate-950 rounded-xl p-2.5 flex items-center justify-between text-[11px] font-bold text-slate-600 dark:text-slate-400">
                     <span className="flex items-center gap-1.5">
                       <Sun size={12} className="text-amber-500" />
                       UV Index
@@ -119,20 +119,20 @@ export default function Calendar() {
                   </div>
 
                   {/* Sunrise/Sunset */}
-                  <div className="border-t border-slate-50 pt-3 mt-3 grid grid-cols-2 gap-2 text-[10px] text-slate-400 font-bold">
+                  <div className="border-t border-slate-50 dark:border-slate-800/80 pt-3 mt-3 grid grid-cols-2 gap-2 text-[10px] text-slate-400 dark:text-slate-500 font-bold">
                     <div className="flex items-center gap-1.5">
                       <Sunrise size={12} className="text-orange-400" />
                       <div>
-                        <span className="text-[9px] text-slate-300 block leading-none">Sunrise</span>
-                        <span className="text-slate-600 block mt-0.5">{sunriseStr}</span>
+                        <span className="text-[9px] text-slate-300 dark:text-slate-600 block leading-none">Sunrise</span>
+                        <span className="text-slate-600 dark:text-slate-350 block mt-0.5">{sunriseStr}</span>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-1.5 justify-end text-right">
                       <Sunset size={12} className="text-amber-500" />
                       <div>
-                        <span className="text-[9px] text-slate-300 block leading-none">Sunset</span>
-                        <span className="text-slate-600 block mt-0.5">{sunsetStr}</span>
+                        <span className="text-[9px] text-slate-300 dark:text-slate-600 block leading-none">Sunset</span>
+                        <span className="text-slate-600 dark:text-slate-350 block mt-0.5">{sunsetStr}</span>
                       </div>
                     </div>
                   </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Navigation, Menu, Clock } from 'lucide-react';
 import Logo from '../assets/logo.jpg';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header({ onSelectLocation, location, weather, onUseCurrentLocation, onToggleSidebar, sidebarOpen }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -75,12 +76,12 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100/80">
+    <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-950/80 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-5 border-b border-slate-100/80 dark:border-slate-900/80">
       {/* Profile Greeting Section */}
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
-          className="p-2.5 rounded-2xl border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 flex lg:hidden"
+          className="p-2.5 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 shadow-sm transition-all duration-300 flex lg:hidden cursor-pointer"
           title="Toggle Sidebar"
         >
           <Menu size={18} className="stroke-[2.2] text-orange-500" />
@@ -96,14 +97,14 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
         </div>
 
         <div>
-          <h2 className="text-slate-800 text-lg sm:text-xl font-extrabold leading-tight tracking-tight">
+          <h2 className="text-slate-800 dark:text-slate-100 text-lg sm:text-xl font-extrabold leading-tight tracking-tight">
             {location.name}{location.country ? `, ${location.country}` : ''}
           </h2>
           {localTime && weather && (
-            <span className="text-slate-500 text-xs font-semibold mt-1 flex items-center gap-1.5 leading-none">
+            <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1 flex items-center gap-1.5 leading-none">
               <Clock size={12} className="text-orange-500 stroke-[2.2] shrink-0" />
               <span>
-                {localTime} <span className="text-slate-400 font-medium">({weather.timezone})</span>
+                {localTime} <span className="text-slate-400 dark:text-slate-550 font-medium">({weather.timezone})</span>
               </span>
             </span>
           )}
@@ -123,7 +124,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 250)}
             placeholder="Search city..."
-            className="w-full sm:w-64 pl-5 pr-11 py-2.5 rounded-full border border-slate-100 bg-slate-50/50 text-slate-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/70 placeholder:text-slate-400 transition-all duration-300"
+            className="w-full sm:w-64 pl-5 pr-11 py-2.5 rounded-full border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/70 placeholder:text-slate-400 dark:placeholder:text-slate-550 transition-all duration-300"
           />
           <Search
             size={18}
@@ -132,7 +133,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
 
           {/* Autocomplete Suggestions Dropdown */}
           {showSuggestions && (searchQuery.trim().length >= 2 || suggestions.length > 0) && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 backdrop-blur-md rounded-2xl border border-slate-100 shadow-xl overflow-hidden z-[999] animate-fadeIn">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-2xl border border-slate-100 dark:border-slate-800 shadow-xl overflow-hidden z-[999] animate-fadeIn">
               <div className="py-1">
                 {/* Geolocation Button */}
                 <button
@@ -142,7 +143,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
                     setShowSuggestions(false);
                     setSearchQuery('');
                   }}
-                  className="w-full px-4 py-2.5 text-left text-xs font-bold text-orange-500 hover:bg-orange-50 flex items-center gap-2 border-b border-slate-50 transition-colors"
+                  className="w-full px-4 py-2.5 text-left text-xs font-bold text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-950/20 flex items-center gap-2 border-b border-slate-50 dark:border-slate-800/80 transition-colors cursor-pointer"
                 >
                   <Navigation size={12} className="fill-orange-500" />
                   Use Current Location
@@ -154,16 +155,16 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
                       key={suggestion.id}
                       type="button"
                       onClick={() => handleSuggestionClick(suggestion)}
-                      className="w-full px-4 py-2.5 text-left hover:bg-slate-50 flex flex-col transition-colors"
+                      className="w-full px-4 py-2.5 text-left hover:bg-slate-50 dark:hover:bg-slate-850 flex flex-col transition-colors cursor-pointer"
                     >
-                      <span className="text-sm font-bold text-slate-700">{suggestion.name}</span>
-                      <span className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                      <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{suggestion.name}</span>
+                      <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold mt-0.5">
                         {suggestion.admin1 ? `${suggestion.admin1}, ` : ''}{suggestion.country}
                       </span>
                     </button>
                   ))
                 ) : (
-                  <div className="px-4 py-3 text-xs font-semibold text-slate-400 text-center">
+                  <div className="px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-550 text-center">
                     No cities found
                   </div>
                 )}
@@ -175,10 +176,12 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
         <button
           onClick={onUseCurrentLocation}
           title="Use my current location"
-          className="relative p-2.5 rounded-full border border-slate-100 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-800 shadow-sm transition-all duration-300 group"
+          className="relative p-2.5 rounded-full border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 shadow-sm transition-all duration-300 group cursor-pointer"
         >
           <MapPin size={18} className="stroke-[2.2] group-hover:scale-110 transition-transform duration-300 text-orange-500" />
         </button>
+
+        <ThemeToggle />
       </div>
     </header>
   );

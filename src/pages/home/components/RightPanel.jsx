@@ -159,7 +159,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
     : '';
 
   return (
-    <div className="bg-slate-50/50 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 justify-between gap-8 lg:h-full lg:overflow-y-auto">
+    <div className="bg-slate-50/50 dark:bg-slate-950/40 w-full lg:w-[350px] flex flex-col p-6 lg:p-8 justify-between gap-8 lg:h-full lg:overflow-y-auto">
       <AnimatePresence mode="wait">
         {!isLoaded ? (
           <motion.div
@@ -171,15 +171,15 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
             className="flex flex-col justify-between gap-8 min-h-full w-full animate-pulse"
           >
             <div className="flex flex-col gap-4">
-              <div className="h-6 w-32 bg-slate-200 rounded-lg"></div>
-              <div className="h-28 bg-slate-100 rounded-[28px] mt-2"></div>
+              <div className="h-6 w-32 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
+              <div className="h-28 bg-slate-100 dark:bg-slate-800/60 rounded-[28px] mt-2"></div>
             </div>
-            <div className="h-24 bg-slate-150 rounded-[28px]"></div>
+            <div className="h-24 bg-slate-150 dark:bg-slate-800/40 rounded-[28px]"></div>
             <div className="flex flex-col gap-4 flex-1 justify-end mt-4">
-              <div className="h-5 w-36 bg-slate-200 rounded-lg mb-2"></div>
-              <div className="h-16 bg-slate-100 rounded-2xl"></div>
-              <div className="h-16 bg-slate-100 rounded-2xl"></div>
-              <div className="h-12 bg-slate-200 rounded-2xl mt-4"></div>
+              <div className="h-5 w-36 bg-slate-200 dark:bg-slate-800 rounded-lg mb-2"></div>
+              <div className="h-16 bg-slate-100 dark:bg-slate-800/40 rounded-2xl"></div>
+              <div className="h-16 bg-slate-100 dark:bg-slate-800/40 rounded-2xl"></div>
+              <div className="h-12 bg-slate-200 dark:bg-slate-800 rounded-2xl mt-4"></div>
             </div>
           </motion.div>
         ) : (
@@ -195,16 +195,16 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
             <motion.div variants={itemVariants} className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div className="max-w-[70%]">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block">Sun</span>
-                  <div className="flex items-center gap-1.5 text-slate-700 font-bold text-sm mt-1">
+                  <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest block">Sun</span>
+                  <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-bold text-sm mt-1">
                     <span className="truncate" title={locationText}>{locationText}</span>
                   </div>
                 </div>
-                <span className="text-3xl font-black text-slate-800">{currentTemp}°C</span>
+                <span className="text-3xl font-black text-slate-800 dark:text-slate-100">{currentTemp}°C</span>
               </div>
 
               {/* Sun Trajectory Path (Custom SVG) */}
-              <div className="flex flex-col items-center justify-center bg-white border border-slate-100/50 rounded-[28px] p-5 shadow-sm mt-2 relative overflow-hidden group">
+              <div className="flex flex-col items-center justify-center bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/80 rounded-[28px] p-5 shadow-sm mt-2 relative overflow-hidden group">
                 <div className="w-full h-[110px] relative mt-2">
                   <svg viewBox="0 0 200 100" className="w-full h-full overflow-visible">
                     <defs>
@@ -222,6 +222,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
                       d="M 15,90 A 85,85 0 0,1 185,90"
                       fill="none"
                       stroke="#E2E8F0"
+                      className="stroke-[#E2E8F0] dark:stroke-slate-700"
                       strokeWidth="2.5"
                       strokeDasharray="4 4"
                     />
@@ -260,29 +261,29 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
                 </div>
 
                 {/* Time text markers */}
-                <div className="flex items-center justify-between w-full mt-3 border-t border-slate-50 pt-3 text-[10px] text-slate-400 font-extrabold uppercase tracking-wider">
+                <div className="flex items-center justify-between w-full mt-3 border-t border-slate-50 dark:border-slate-800/80 pt-3 text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-wider">
                   <div className="text-left">
-                    <span className="block text-slate-300">Sunrise</span>
-                    <span className="text-slate-600 mt-0.5 block">{sunriseStr}</span>
+                    <span className="block text-slate-300 dark:text-slate-650">Sunrise</span>
+                    <span className="text-slate-600 dark:text-slate-350 mt-0.5 block">{sunriseStr}</span>
                   </div>
                   <div className="text-right">
-                    <span className="block text-slate-300">Sunset</span>
-                    <span className="text-slate-600 mt-0.5 block">{sunsetStr}</span>
+                    <span className="block text-slate-300 dark:text-slate-650">Sunset</span>
+                    <span className="text-slate-600 dark:text-slate-350 mt-0.5 block">{sunsetStr}</span>
                   </div>
                 </div>
               </div>
             </motion.div>
 
             {/* UV Index card */}
-            <motion.div variants={itemVariants} className="bg-[#1E293B] text-white rounded-[28px] p-5 shadow-md flex items-center justify-between group hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+            <motion.div variants={itemVariants} className="bg-[#1E293B] dark:bg-slate-900 text-white rounded-[28px] p-5 shadow-md border dark:border-slate-800/80 flex items-center justify-between group hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl font-black text-white">{Math.round(uviVal)} UVI</span>
+                  <span className="text-xl font-black text-white dark:text-slate-100">{Math.round(uviVal)} UVI</span>
                   <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider ${badgeClass}`}>
                     {uviText}
                   </span>
                 </div>
-                <p className="text-xs text-slate-300 mt-1 font-medium leading-relaxed max-w-[170px]">
+                <p className="text-xs text-slate-300 dark:text-slate-450 mt-1 font-medium leading-relaxed max-w-[170px]">
                   {uviVal <= 2 ? 'Low risk from UV rays.' : uviVal <= 5 ? 'Moderate risk of skin damage.' : 'High risk. Take sun protection.'}
                 </p>
               </div>
@@ -294,7 +295,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
 
             {/* Weather Prediction section */}
             <div className="flex flex-col gap-4 flex-1 justify-end">
-              <motion.h4 variants={itemVariants} className="text-slate-800 text-sm font-extrabold tracking-tight uppercase">
+              <motion.h4 variants={itemVariants} className="text-slate-800 dark:text-slate-200 text-sm font-extrabold tracking-tight uppercase">
                 Weather Prediction
               </motion.h4>
 
@@ -306,18 +307,18 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
                     <motion.div
                       variants={itemVariants}
                       key={idx}
-                      className="flex items-center justify-between bg-white border border-slate-100/50 rounded-2xl p-4 shadow-sm group hover:border-slate-200 transition-all duration-300"
+                      className="flex items-center justify-between bg-white dark:bg-slate-900 border border-slate-100/50 dark:border-slate-800/80 rounded-2xl p-4 shadow-sm group hover:border-slate-200 dark:hover:border-slate-700 transition-all duration-300"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 text-blue-500 group-hover:scale-105 transition-transform">
+                        <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-blue-50 dark:bg-slate-950/50 text-blue-500 dark:text-orange-400 group-hover:scale-105 transition-transform">
                           <Icon className="stroke-[2.2] text-orange-500" size={20} />
                         </div>
                         <div>
-                          <span className="text-xs font-bold text-slate-700">{day.date}</span>
-                          <span className="text-[11px] text-slate-400 font-semibold block mt-0.5">{day.desc}</span>
+                          <span className="text-xs font-bold text-slate-700 dark:text-slate-200">{day.date}</span>
+                          <span className="text-[11px] text-slate-400 dark:text-slate-500 font-semibold block mt-0.5">{day.desc}</span>
                         </div>
                       </div>
-                      <span className="text-xs font-black text-slate-800 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-100/50">{day.tempRange}</span>
+                      <span className="text-xs font-black text-slate-800 dark:text-slate-200 bg-slate-50 dark:bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-100/50 dark:border-slate-800/80">{day.tempRange}</span>
                     </motion.div>
                   );
                 })}

@@ -77,7 +77,7 @@ export default function Monitor() {
       {/* Page Title */}
       <div className="flex items-center gap-2 mb-6 mt-2">
         <Activity className="text-orange-500 stroke-[2.2]" size={20} />
-        <h3 className="text-slate-800 text-sm font-extrabold tracking-tight uppercase">
+        <h3 className="text-slate-800 dark:text-slate-100 text-sm font-extrabold tracking-tight uppercase">
           Forecast Monitor & Telemetry
         </h3>
       </div>
@@ -90,8 +90,8 @@ export default function Monitor() {
 
       {loading || !weather ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 h-96 bg-slate-50 border border-slate-100 rounded-[28px] animate-pulse"></div>
-          <div className="h-96 bg-slate-50 border border-slate-100 rounded-[28px] animate-pulse"></div>
+          <div className="lg:col-span-2 h-96 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[28px] animate-pulse"></div>
+          <div className="h-96 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[28px] animate-pulse"></div>
         </div>
       ) : (
         <motion.div 
@@ -106,50 +106,50 @@ export default function Monitor() {
             {/* Status Panel Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* API Connection */}
-              <motion.div variants={itemVariants} className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
+              <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">API Connection</span>
-                  <div className="p-2 rounded-xl bg-green-50 text-green-600">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">API Connection</span>
+                  <div className="p-2 rounded-xl bg-green-50 dark:bg-green-950/20 text-green-600 dark:text-green-400">
                     <Database size={16} />
                   </div>
                 </div>
                 <div>
-                  <span className="text-2xl font-black text-slate-800">ONLINE</span>
-                  <span className="text-slate-400 text-[10px] font-bold block mt-1">Uptime: 99.9% • Latency: {latency}ms</span>
+                  <span className="text-2xl font-black text-slate-800 dark:text-slate-100">ONLINE</span>
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px] font-bold block mt-1">Uptime: 99.9% • Latency: {latency}ms</span>
                 </div>
               </motion.div>
 
               {/* Data Telemetry */}
-              <motion.div variants={itemVariants} className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
+              <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Metrics Active</span>
-                  <div className="p-2 rounded-xl bg-blue-50 text-blue-500">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">Metrics Active</span>
+                  <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-500 dark:text-blue-400">
                     <Cpu size={16} />
                   </div>
                 </div>
                 <div>
-                  <span className="text-2xl font-black text-slate-800">12 Channels</span>
-                  <span className="text-slate-400 text-[10px] font-bold block mt-1">Updates: Dynamic Polling</span>
+                  <span className="text-2xl font-black text-slate-800 dark:text-slate-100">12 Channels</span>
+                  <span className="text-slate-400 dark:text-slate-550 text-[10px] font-bold block mt-1">Updates: Dynamic Polling</span>
                 </div>
               </motion.div>
 
               {/* Status Alert */}
-              <motion.div variants={itemVariants} className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
+              <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Active Warnings</span>
-                  <div className="p-2 rounded-xl bg-orange-50 text-orange-500">
+                  <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">Active Warnings</span>
+                  <div className="p-2 rounded-xl bg-orange-50 dark:bg-orange-950/20 text-orange-500 dark:text-orange-400">
                     <ShieldAlert size={16} />
                   </div>
                 </div>
                 <div>
-                  <span className="text-2xl font-black text-slate-800">0 Alerts</span>
-                  <span className="text-slate-400 text-[10px] font-bold block mt-1">Environment parameters stable</span>
+                  <span className="text-2xl font-black text-slate-800 dark:text-slate-100">0 Alerts</span>
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px] font-bold block mt-1">Environment parameters stable</span>
                 </div>
               </motion.div>
             </div>
 
             {/* Simulated Live System Logs console */}
-            <motion.div variants={itemVariants} className="bg-[#1E293B] text-white rounded-[28px] p-6 shadow-md flex flex-col h-[320px] overflow-hidden">
+            <motion.div variants={itemVariants} className="bg-[#1E293B] dark:bg-slate-900 text-white rounded-[28px] p-6 shadow-md border dark:border-slate-800/50 flex flex-col h-[320px] overflow-hidden">
               <div className="flex items-center justify-between border-b border-slate-700/60 pb-3 mb-4 shrink-0">
                 <div className="flex items-center gap-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></div>
@@ -180,39 +180,39 @@ export default function Monitor() {
           <div className="flex flex-col gap-6">
             
             {/* Station details card */}
-            <motion.div variants={itemVariants} className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col gap-5">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Meteorological Node</span>
+            <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col gap-5">
+              <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">Meteorological Node</span>
               
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-orange-50 text-orange-500">
+                <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-orange-50 dark:bg-slate-800 text-orange-500 dark:text-orange-400">
                   <Thermometer size={22} className="stroke-[2.2]" />
                 </div>
                 <div>
-                  <h4 className="text-slate-800 text-base font-extrabold">{location.name}</h4>
-                  <span className="text-[10px] text-slate-400 font-bold block mt-0.5">{location.country || 'Global Feed'}</span>
+                  <h4 className="text-slate-800 dark:text-slate-100 text-base font-extrabold">{location.name}</h4>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold block mt-0.5">{location.country || 'Global Feed'}</span>
                 </div>
               </div>
 
-              <div className="border-t border-slate-50 pt-4 flex flex-col gap-3.5 text-xs text-slate-600 font-bold">
+              <div className="border-t border-slate-50 dark:border-slate-800/80 pt-4 flex flex-col gap-3.5 text-xs text-slate-600 dark:text-slate-450 font-bold">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Node Lat</span>
-                  <span className="font-mono text-slate-700">{location.latitude.toFixed(4)}°N</span>
+                  <span className="text-slate-400 dark:text-slate-550">Node Lat</span>
+                  <span className="font-mono text-slate-700 dark:text-slate-300">{location.latitude.toFixed(4)}°N</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Node Lon</span>
-                  <span className="font-mono text-slate-700">{location.longitude.toFixed(4)}°E</span>
+                  <span className="text-slate-400 dark:text-slate-550">Node Lon</span>
+                  <span className="font-mono text-slate-700 dark:text-slate-300">{location.longitude.toFixed(4)}°E</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Timezone Offset</span>
-                  <span className="font-mono text-slate-700">+{weather.utc_offset_seconds}s</span>
+                  <span className="text-slate-400 dark:text-slate-550">Timezone Offset</span>
+                  <span className="font-mono text-slate-700 dark:text-slate-300">+{weather.utc_offset_seconds}s</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Current Temperature</span>
-                  <span className="text-slate-700">{weather.current.temperature_2m}°C</span>
+                  <span className="text-slate-400 dark:text-slate-550">Current Temperature</span>
+                  <span className="text-slate-700 dark:text-slate-300">{weather.current.temperature_2m}°C</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Current Humidity</span>
-                  <span className="text-slate-700">{weather.current.relative_humidity_2m}%</span>
+                  <span className="text-slate-400 dark:text-slate-550">Current Humidity</span>
+                  <span className="text-slate-700 dark:text-slate-300">{weather.current.relative_humidity_2m}%</span>
                 </div>
               </div>
             </motion.div>

@@ -81,7 +81,7 @@ export default function Location() {
       {/* Page Section Title */}
       <div className="flex items-center gap-2 mb-6 mt-2">
         <MapPin className="text-orange-500 stroke-[2.2]" size={20} />
-        <h3 className="text-slate-800 text-sm font-extrabold tracking-tight uppercase">
+        <h3 className="text-slate-800 dark:text-slate-100 text-sm font-extrabold tracking-tight uppercase">
           Location Explorer
         </h3>
         {globalLoading && (
@@ -95,7 +95,7 @@ export default function Location() {
       {loadingCities ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {DEFAULT_CITIES.map((_, idx) => (
-            <div key={idx} className="h-44 bg-slate-50 border border-slate-100 rounded-[28px] animate-pulse"></div>
+            <div key={idx} className="h-44 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[28px] animate-pulse"></div>
           ))}
         </div>
       ) : (
@@ -111,37 +111,37 @@ export default function Location() {
               <motion.div key={idx} variants={itemVariants}>
                 <div
                   onClick={() => handleJumpToCity(city)}
-                  className="bg-white border border-slate-100/70 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-44 hover:shadow-md hover:border-slate-200 transition-all duration-300 group cursor-pointer"
+                  className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-44 hover:shadow-md hover:border-slate-200 dark:hover:border-slate-700 transition-all duration-300 group cursor-pointer"
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <h4 className="text-slate-800 text-lg font-black truncate max-w-[150px]">{city.name}</h4>
-                      <span className="text-slate-400 text-xs font-bold block mt-0.5">{city.country}</span>
+                      <h4 className="text-slate-800 dark:text-slate-100 text-lg font-black truncate max-w-[150px]">{city.name}</h4>
+                      <span className="text-slate-400 dark:text-slate-550 text-xs font-bold block mt-0.5">{city.country}</span>
                     </div>
-                    <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-orange-50 text-orange-500 group-hover:scale-110 transition-transform">
+                    <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-orange-50 dark:bg-slate-800 text-orange-500 dark:text-orange-400 group-hover:scale-110 transition-transform">
                       <Icon className="stroke-[2.2]" size={20} />
                     </div>
                   </div>
 
                   <div className="flex items-end justify-between mt-4">
                     <div>
-                      <span className="text-3xl font-extrabold text-slate-800 tracking-tight">{city.temp}°C</span>
-                      <p className="text-xs text-slate-500 font-bold mt-0.5 leading-none">{desc}</p>
+                      <span className="text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">{city.temp}°C</span>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-bold mt-0.5 leading-none">{desc}</p>
                     </div>
 
-                    <div className="flex flex-col gap-1 text-[10px] text-slate-400 font-bold text-right">
+                    <div className="flex flex-col gap-1 text-[10px] text-slate-400 dark:text-slate-500 font-bold text-right">
                       <div className="flex items-center gap-1 justify-end">
                         <Droplets size={10} className="text-blue-400" />
                         <span>{city.humidity}%</span>
                       </div>
                       <div className="flex items-center gap-1 justify-end">
-                        <Wind size={10} className="text-slate-400" />
+                        <Wind size={10} className="text-slate-400 dark:text-slate-550" />
                         <span>{city.windSpeed} km/h</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="border-t border-slate-50 pt-2.5 mt-2 flex items-center justify-between text-xs font-bold text-orange-500 group-hover:text-orange-600 transition-colors">
+                  <div className="border-t border-slate-50 dark:border-slate-800/80 pt-2.5 mt-2 flex items-center justify-between text-xs font-bold text-orange-500 group-hover:text-orange-600 transition-colors">
                     <span>View Weather details</span>
                     <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                   </div>

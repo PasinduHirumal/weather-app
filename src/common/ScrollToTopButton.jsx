@@ -9,6 +9,8 @@ export default function ScrollToTopButton() {
   useEffect(() => {
     const handleScroll = (event) => {
       const target = event.target;
+      if (!target) return;
+
       let scrollTop = 0;
       let scrollHeight = 0;
       let clientHeight = 0;
@@ -17,7 +19,7 @@ export default function ScrollToTopButton() {
         scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
         clientHeight = document.documentElement.clientHeight || window.innerHeight;
-      } else if (target && target.classList && (target.classList.contains('overflow-y-auto') || target.className.includes('overflow-y-auto'))) {
+      } else if (target instanceof HTMLElement) {
         scrollTop = target.scrollTop;
         scrollHeight = target.scrollHeight;
         clientHeight = target.clientHeight;
@@ -47,7 +49,7 @@ export default function ScrollToTopButton() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
-    const scrollContainers = document.querySelectorAll('.overflow-y-auto, [class*="overflow-y-auto"]');
+    const scrollContainers = document.querySelectorAll('.overflow-y-auto, [class*="overflow-y-auto"], [class*="overflow-y-scroll"]');
     scrollContainers.forEach((container) => {
       container.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -92,19 +94,20 @@ export default function ScrollToTopButton() {
           animate="visible"
           exit="exit"
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white text-orange-500 shadow-xl shadow-slate-200/80 border border-slate-100/50 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 cursor-pointer focus:outline-none"
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-900 text-orange-500 dark:text-orange-400 shadow-xl shadow-slate-200/80 dark:shadow-slate-950/50 border border-slate-100/50 dark:border-slate-800/85 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform duration-300 cursor-pointer focus:outline-none"
           title="Scroll to Top"
         >
           <div className="relative w-12 h-12 flex items-center justify-center">
             {/* Circular Progress Ring */}
             <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 40 40">
-              {/* Track (gray) */}
+              {/* Track (gray/dark-gray) */}
               <circle
                 cx="20"
                 cy="20"
                 r="16.5"
                 fill="none"
-                stroke="#f1f5f9"
+                stroke="currentColor"
+                className="text-slate-100 dark:text-slate-800"
                 strokeWidth="2.5"
               />
               {/* Active stroke */}
@@ -129,7 +132,7 @@ export default function ScrollToTopButton() {
             </svg>
             
             {/* Arrow Icon */}
-            <ArrowUp size={18} className="text-orange-500 stroke-[2.5]" />
+            <ArrowUp size={18} className="text-orange-500 dark:text-orange-400 stroke-[2.5]" />
           </div>
         </motion.button>
       )}

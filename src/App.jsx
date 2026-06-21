@@ -7,12 +7,14 @@ import Calendar from './pages/calendar/Calendar';
 import Monitor from './pages/monitor/Monitor';
 import ScrollToTop from './common/ScrollToTop';
 import ScrollToTopButton from './common/ScrollToTopButton';
+import { ThemeProvider } from './common/ThemeContext';
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <ScrollToTopButton />
+    <ThemeProvider>
+      <Router>
+        <ScrollToTop />
+        <ScrollToTopButton />
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
@@ -24,6 +26,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
+    </ThemeProvider>
   );
 }
 
