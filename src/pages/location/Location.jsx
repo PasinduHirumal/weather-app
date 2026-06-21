@@ -116,7 +116,7 @@ export default function Location() {
                   <div className="flex items-start justify-between">
                     <div>
                       <h4 className="text-slate-800 dark:text-slate-100 text-lg font-black truncate max-w-[150px]">{city.name}</h4>
-                      <span className="text-slate-400 dark:text-slate-550 text-xs font-bold block mt-0.5">{city.country}</span>
+                      <span className="text-slate-400 dark:text-slate-500 text-xs font-bold block mt-0.5">{city.country}</span>
                     </div>
                     <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-orange-50 dark:bg-slate-800 text-orange-500 dark:text-orange-400 group-hover:scale-110 transition-transform">
                       <Icon className="stroke-[2.2]" size={20} />
@@ -135,7 +135,7 @@ export default function Location() {
                         <span>{city.humidity}%</span>
                       </div>
                       <div className="flex items-center gap-1 justify-end">
-                        <Wind size={10} className="text-slate-400 dark:text-slate-550" />
+                        <Wind size={10} className="text-slate-400 dark:text-slate-500" />
                         <span>{city.windSpeed} km/h</span>
                       </div>
                     </div>

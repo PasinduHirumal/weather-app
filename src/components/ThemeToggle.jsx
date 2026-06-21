@@ -41,7 +41,7 @@ export default function ThemeToggle() {
         className="flex items-center gap-1.5 p-2.5 rounded-full border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 shadow-sm transition-all duration-300 group cursor-pointer"
       >
         <ActiveIcon size={18} className="stroke-[2.2] group-hover:scale-110 transition-transform duration-300 text-orange-500" />
-        <ChevronDown size={12} className={`stroke-[2.2] text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-350 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown size={12} className={`stroke-[2.2] text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       <AnimatePresence>

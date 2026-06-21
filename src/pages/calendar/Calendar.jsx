@@ -124,7 +124,7 @@ export default function Calendar() {
                       <Sunrise size={12} className="text-orange-400" />
                       <div>
                         <span className="text-[9px] text-slate-300 dark:text-slate-600 block leading-none">Sunrise</span>
-                        <span className="text-slate-600 dark:text-slate-350 block mt-0.5">{sunriseStr}</span>
+                        <span className="text-slate-600 dark:text-slate-300 block mt-0.5">{sunriseStr}</span>
                       </div>
                     </div>
 
@@ -132,7 +132,7 @@ export default function Calendar() {
                       <Sunset size={12} className="text-amber-500" />
                       <div>
                         <span className="text-[9px] text-slate-300 dark:text-slate-600 block leading-none">Sunset</span>
-                        <span className="text-slate-600 dark:text-slate-350 block mt-0.5">{sunsetStr}</span>
+                        <span className="text-slate-600 dark:text-slate-300 block mt-0.5">{sunsetStr}</span>
                       </div>
                     </div>
                   </div>

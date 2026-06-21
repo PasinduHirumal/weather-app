@@ -169,7 +169,7 @@ export default function TemperatureChartCard({ weather, loading }) {
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
               activeTab === 'temp'
                 ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                : 'text-slate-400 dark:text-slate-550 hover:text-slate-700 dark:hover:text-slate-350'
+                : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
             <Thermometer size={16} className="stroke-[2.5]" />
@@ -188,7 +188,7 @@ export default function TemperatureChartCard({ weather, loading }) {
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
               activeTab === 'rain'
                 ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                : 'text-slate-400 dark:text-slate-550 hover:text-slate-700 dark:hover:text-slate-350'
+                : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
             <CloudRain size={16} className="stroke-[2.5]" />
@@ -207,7 +207,7 @@ export default function TemperatureChartCard({ weather, loading }) {
             className={`p-2 rounded-xl transition-all duration-300 cursor-pointer ${
               activeTab === 'wind'
                 ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                : 'text-slate-400 dark:text-slate-550 hover:text-slate-700 dark:hover:text-slate-350'
+                : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
             <Wind size={16} className="stroke-[2.5]" />
@@ -316,7 +316,7 @@ export default function TemperatureChartCard({ weather, loading }) {
             <span className={`text-base font-extrabold transition-all duration-200 ${hoveredIndex === index ? 'text-slate-800 dark:text-slate-100 scale-105' : 'text-slate-500 dark:text-slate-400'}`}>
               {point.display}
             </span>
-            <span className="text-[11px] text-slate-400 dark:text-slate-550 font-bold mt-1 uppercase tracking-wider">
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 font-bold mt-1 uppercase tracking-wider">
               {point.label}
             </span>
           </div>

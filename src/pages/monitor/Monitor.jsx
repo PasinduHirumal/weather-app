@@ -108,7 +108,7 @@ export default function Monitor() {
               {/* API Connection */}
               <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">API Connection</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">API Connection</span>
                   <div className="p-2 rounded-xl bg-green-50 dark:bg-green-950/20 text-green-600 dark:text-green-400">
                     <Database size={16} />
                   </div>
@@ -122,21 +122,21 @@ export default function Monitor() {
               {/* Data Telemetry */}
               <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">Metrics Active</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Metrics Active</span>
                   <div className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/20 text-blue-500 dark:text-blue-400">
                     <Cpu size={16} />
                   </div>
                 </div>
                 <div>
                   <span className="text-2xl font-black text-slate-800 dark:text-slate-100">12 Channels</span>
-                  <span className="text-slate-400 dark:text-slate-550 text-[10px] font-bold block mt-1">Updates: Dynamic Polling</span>
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px] font-bold block mt-1">Updates: Dynamic Polling</span>
                 </div>
               </motion.div>
 
               {/* Status Alert */}
               <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col justify-between h-36">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">Active Warnings</span>
+                  <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Active Warnings</span>
                   <div className="p-2 rounded-xl bg-orange-50 dark:bg-orange-950/20 text-orange-500 dark:text-orange-400">
                     <ShieldAlert size={16} />
                   </div>
@@ -181,7 +181,7 @@ export default function Monitor() {
             
             {/* Station details card */}
             <motion.div variants={itemVariants} className="bg-white dark:bg-slate-900 border border-slate-100/70 dark:border-slate-800/80 p-5 rounded-[28px] shadow-sm flex flex-col gap-5">
-              <span className="text-[10px] text-slate-400 dark:text-slate-550 font-bold uppercase tracking-wider">Meteorological Node</span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">Meteorological Node</span>
               
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-orange-50 dark:bg-slate-800 text-orange-500 dark:text-orange-400">
@@ -193,25 +193,25 @@ export default function Monitor() {
                 </div>
               </div>
 
-              <div className="border-t border-slate-50 dark:border-slate-800/80 pt-4 flex flex-col gap-3.5 text-xs text-slate-600 dark:text-slate-450 font-bold">
+              <div className="border-t border-slate-50 dark:border-slate-800/80 pt-4 flex flex-col gap-3.5 text-xs text-slate-600 dark:text-slate-400 font-bold">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 dark:text-slate-550">Node Lat</span>
+                  <span className="text-slate-400 dark:text-slate-500">Node Lat</span>
                   <span className="font-mono text-slate-700 dark:text-slate-300">{location.latitude.toFixed(4)}°N</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 dark:text-slate-550">Node Lon</span>
+                  <span className="text-slate-400 dark:text-slate-500">Node Lon</span>
                   <span className="font-mono text-slate-700 dark:text-slate-300">{location.longitude.toFixed(4)}°E</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 dark:text-slate-550">Timezone Offset</span>
+                  <span className="text-slate-400 dark:text-slate-500">Timezone Offset</span>
                   <span className="font-mono text-slate-700 dark:text-slate-300">+{weather.utc_offset_seconds}s</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 dark:text-slate-550">Current Temperature</span>
+                  <span className="text-slate-400 dark:text-slate-500">Current Temperature</span>
                   <span className="text-slate-700 dark:text-slate-300">{weather.current.temperature_2m}°C</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400 dark:text-slate-550">Current Humidity</span>
+                  <span className="text-slate-400 dark:text-slate-500">Current Humidity</span>
                   <span className="text-slate-700 dark:text-slate-300">{weather.current.relative_humidity_2m}%</span>
                 </div>
               </div>

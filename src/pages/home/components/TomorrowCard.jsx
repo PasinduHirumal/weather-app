@@ -13,14 +13,14 @@ import bgFoggy from '../../../assets/weather/weather_foggy.png';
 export default function TomorrowCard({ weather, location, loading }) {
   if (loading || !weather) {
     return (
-      <div className="bg-slate-50 rounded-[32px] p-5 sm:p-6 shadow-sm flex flex-col h-[360px] justify-between relative overflow-hidden animate-pulse border border-slate-100">
+      <div className="bg-slate-50 dark:bg-slate-900 rounded-[32px] p-5 sm:p-6 shadow-sm flex flex-col h-[360px] justify-between relative overflow-hidden animate-pulse border border-slate-100 dark:border-slate-800/80">
         <div className="flex flex-col gap-2">
-          <div className="h-4 w-20 bg-slate-200 rounded-lg"></div>
-          <div className="h-8 w-44 bg-slate-200 rounded-xl mt-2"></div>
+          <div className="h-4 w-20 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
+          <div className="h-8 w-44 bg-slate-200 dark:bg-slate-800 rounded-xl mt-2"></div>
         </div>
         <div className="flex flex-col gap-2 mt-auto">
-          <div className="h-10 w-24 bg-slate-200 rounded-xl"></div>
-          <div className="h-5 w-20 bg-slate-200 rounded-lg mt-1"></div>
+          <div className="h-10 w-24 bg-slate-200 dark:bg-slate-800 rounded-xl"></div>
+          <div className="h-5 w-20 bg-slate-200 dark:bg-slate-800 rounded-lg mt-1"></div>
         </div>
       </div>
     );

@@ -6,17 +6,17 @@ import { getAqiCategory, getWindDirection } from '../../../utils/weatherUtils';
 export default function AirQualityCard({ airQuality, weather, loading }) {
   if (loading || !airQuality || !weather) {
     return (
-      <div className="bg-white rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 flex flex-col h-[320px] justify-between relative overflow-hidden animate-pulse">
+      <div className="bg-white dark:bg-slate-900 rounded-[32px] p-5 sm:p-6 shadow-sm border border-slate-100/50 dark:border-slate-800/80 flex flex-col h-[320px] justify-between relative overflow-hidden animate-pulse">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded-full bg-slate-200"></div>
-            <div className="h-6 w-28 bg-slate-200 rounded-lg"></div>
+            <div className="w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-800"></div>
+            <div className="h-6 w-28 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
           </div>
-          <div className="h-4 w-40 bg-slate-200 rounded-lg mt-1"></div>
-          <div className="h-14 w-24 bg-slate-200 rounded-2xl mt-5"></div>
-          <div className="h-5 w-28 bg-slate-200 rounded-lg mt-2"></div>
+          <div className="h-4 w-40 bg-slate-200 dark:bg-slate-800 rounded-lg mt-1"></div>
+          <div className="h-14 w-24 bg-slate-200 dark:bg-slate-800 rounded-2xl mt-5"></div>
+          <div className="h-5 w-28 bg-slate-200 dark:bg-slate-800 rounded-lg mt-2"></div>
         </div>
-        <div className="h-16 bg-slate-50/80 rounded-2xl mt-auto"></div>
+        <div className="h-16 bg-slate-50/80 dark:bg-slate-800/40 rounded-2xl mt-auto"></div>
       </div>
     );
   }

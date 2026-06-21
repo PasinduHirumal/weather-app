@@ -104,7 +104,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
             <span className="text-slate-500 dark:text-slate-400 text-xs font-semibold mt-1 flex items-center gap-1.5 leading-none">
               <Clock size={12} className="text-orange-500 stroke-[2.2] shrink-0" />
               <span>
-                {localTime} <span className="text-slate-400 dark:text-slate-550 font-medium">({weather.timezone})</span>
+                {localTime} <span className="text-slate-400 dark:text-slate-500 font-medium">({weather.timezone})</span>
               </span>
             </span>
           )}
@@ -124,7 +124,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
             onFocus={() => setShowSuggestions(true)}
             onBlur={() => setTimeout(() => setShowSuggestions(false), 250)}
             placeholder="Search city..."
-            className="w-full sm:w-64 pl-5 pr-11 py-2.5 rounded-full border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/70 placeholder:text-slate-400 dark:placeholder:text-slate-550 transition-all duration-300"
+            className="w-full sm:w-64 pl-5 pr-11 py-2.5 rounded-full border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900 text-slate-700 dark:text-slate-200 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/70 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all duration-300"
           />
           <Search
             size={18}
@@ -155,7 +155,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
                       key={suggestion.id}
                       type="button"
                       onClick={() => handleSuggestionClick(suggestion)}
-                      className="w-full px-4 py-2.5 text-left hover:bg-slate-50 dark:hover:bg-slate-850 flex flex-col transition-colors cursor-pointer"
+                      className="w-full px-4 py-2.5 text-left hover:bg-slate-50 dark:hover:bg-slate-800 flex flex-col transition-colors cursor-pointer"
                     >
                       <span className="text-sm font-bold text-slate-700 dark:text-slate-200">{suggestion.name}</span>
                       <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold mt-0.5">
@@ -164,7 +164,7 @@ export default function Header({ onSelectLocation, location, weather, onUseCurre
                     </button>
                   ))
                 ) : (
-                  <div className="px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-550 text-center">
+                  <div className="px-4 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500 text-center">
                     No cities found
                   </div>
                 )}

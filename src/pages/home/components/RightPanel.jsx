@@ -174,7 +174,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
               <div className="h-6 w-32 bg-slate-200 dark:bg-slate-800 rounded-lg"></div>
               <div className="h-28 bg-slate-100 dark:bg-slate-800/60 rounded-[28px] mt-2"></div>
             </div>
-            <div className="h-24 bg-slate-150 dark:bg-slate-800/40 rounded-[28px]"></div>
+            <div className="h-24 bg-slate-100 dark:bg-slate-800/40 rounded-[28px]"></div>
             <div className="flex flex-col gap-4 flex-1 justify-end mt-4">
               <div className="h-5 w-36 bg-slate-200 dark:bg-slate-800 rounded-lg mb-2"></div>
               <div className="h-16 bg-slate-100 dark:bg-slate-800/40 rounded-2xl"></div>
@@ -263,12 +263,12 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
                 {/* Time text markers */}
                 <div className="flex items-center justify-between w-full mt-3 border-t border-slate-50 dark:border-slate-800/80 pt-3 text-[10px] text-slate-400 dark:text-slate-500 font-extrabold uppercase tracking-wider">
                   <div className="text-left">
-                    <span className="block text-slate-300 dark:text-slate-650">Sunrise</span>
-                    <span className="text-slate-600 dark:text-slate-350 mt-0.5 block">{sunriseStr}</span>
+                    <span className="block text-slate-300 dark:text-slate-600">Sunrise</span>
+                    <span className="text-slate-600 dark:text-slate-300 mt-0.5 block">{sunriseStr}</span>
                   </div>
                   <div className="text-right">
-                    <span className="block text-slate-300 dark:text-slate-650">Sunset</span>
-                    <span className="text-slate-600 dark:text-slate-350 mt-0.5 block">{sunsetStr}</span>
+                    <span className="block text-slate-300 dark:text-slate-600">Sunset</span>
+                    <span className="text-slate-600 dark:text-slate-300 mt-0.5 block">{sunsetStr}</span>
                   </div>
                 </div>
               </div>
@@ -283,7 +283,7 @@ export default function RightPanel({ weather, airQuality, location, loading }) {
                     {uviText}
                   </span>
                 </div>
-                <p className="text-xs text-slate-300 dark:text-slate-450 mt-1 font-medium leading-relaxed max-w-[170px]">
+                <p className="text-xs text-slate-300 dark:text-slate-400 mt-1 font-medium leading-relaxed max-w-[170px]">
                   {uviVal <= 2 ? 'Low risk from UV rays.' : uviVal <= 5 ? 'Moderate risk of skin damage.' : 'High risk. Take sun protection.'}
                 </p>
               </div>
